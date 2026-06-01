@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Orders – CaféDesk</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --primary:#6F4E37; --secondary:#D9A066; --bg:#F8F5F2; --sidebar:#2C1A0E; --border:#E8E0D8; --shadow:0 2px 20px rgba(111,78,55,0.10); }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Poppins',sans-serif; background:var(--bg); display:flex; min-height:100vh; }
+.sidebar { width:220px; background:var(--sidebar); display:flex; flex-direction:column; flex-shrink:0; min-height:100vh; }
+.sidebar-logo { padding:20px 18px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.logo-name { font-size:18px; font-weight:800; color:#fff; }
+.logo-name span { color:var(--secondary); }
+.logo-sub { font-size:10px; color:rgba(255,255,255,0.4); letter-spacing:1px; text-transform:uppercase; }
+.nav-link { display:flex; align-items:center; gap:10px; padding:10px 18px; color:rgba(255,255,255,0.6); text-decoration:none; font-size:13px; font-weight:500; border-left:3px solid transparent; transition:all 0.2s; }
+.nav-link.active { color:var(--secondary); background:rgba(217,160,102,0.12); border-left-color:var(--secondary); }
+.nav-section { font-size:10px; font-weight:600; letter-spacing:1.5px; color:rgba(255,255,255,0.3); padding:12px 18px 4px; text-transform:uppercase; }
+.sidebar-user { padding:14px 18px; border-top:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:10px; margin-top:auto; }
+.s-avatar { width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--secondary)); display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; font-size:12px; }
+.s-name { font-size:12px; font-weight:600; color:#fff; }
+.s-role { font-size:10px; color:rgba(255,255,255,0.4); }
+
+.main { flex:1; display:flex; flex-direction:column; }
+.topbar { background:#fff; border-bottom:1px solid var(--border); padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between; }
+.topbar-title { font-size:18px; font-weight:800; color:#2C1A0E; }
+
+.page-body { padding:24px; }
+
+/* Filters card */
+.filter-card { background:#fff; border-radius:14px; border:1px solid var(--border); padding:20px 24px; margin-bottom:20px; box-shadow:var(--shadow); }
+.filter-row { display:flex; align-items:flex-end; gap:16px; }
+.filter-group { }
+.filter-label { font-size:11px; font-weight:700; color:#4A3020; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
+.filter-input { padding:9px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:'Poppins',sans-serif; font-size:13px; outline:none; background:#fafafa; }
+.filter-input:focus { border-color:var(--primary); }
+.btn-filter { padding:9px 20px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-family:'Poppins',sans-serif; font-size:13px; font-weight:600; cursor:pointer; }
+.btn-clear { padding:9px 16px; background:var(--bg); color:#888; border:1.5px solid var(--border); border-radius:8px; font-family:'Poppins',sans-serif; font-size:13px; font-weight:500; cursor:pointer; }
+
+/* Orders table card */
+.table-card { background:#fff; border-radius:14px; border:1px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
+.table-header { padding:18px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.table-title { font-size:15px; font-weight:700; color:#2C1A0E; }
+.orders-count { font-size:12px; color:#888; background:var(--bg); padding:4px 12px; border-radius:20px; }
+
+table { width:100%; border-collapse:collapse; }
+thead th { background:#FAFAF8; padding:12px 20px; text-align:left; font-size:11px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#aaa; border-bottom:2px solid var(--border); }
+tbody td { padding:16px 20px; border-bottom:1px solid var(--border); font-size:13px; color:#333; vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:#faf8f6; }
+
+/* Expand row */
+.expand-row td { padding:0; border-bottom:1px solid var(--border); }
+.expand-inner { padding:0 20px 20px; background:#FAFAF8; }
+.expand-title { font-size:12px; font-weight:700; color:#4A3020; margin-bottom:12px; padding-top:16px; }
+.order-items-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.order-item-chip { background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 12px; display:flex; align-items:center; gap:8px; }
+.oi-emoji { font-size:22px; }
+.oi-details .oi-name { font-size:12px; font-weight:700; color:#2C1A0E; }
+.oi-details .oi-sub { font-size:11px; color:#aaa; }
+.expand-summary { display:flex; justify-content:flex-end; gap:24px; margin-top:14px; padding-top:12px; border-top:1px dashed var(--border); }
+.sum-item { text-align:right; }
+.sum-label { font-size:11px; color:#aaa; }
+.sum-val { font-size:14px; font-weight:700; color:#2C1A0E; }
+.sum-val.total { color:var(--primary); font-size:18px; font-weight:800; }
+
+/* Badges */
+.badge { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:20px; font-size:11.5px; font-weight:600; }
+.badge-processing { background:#FFF3CD; color:#856404; }
+.badge-delivery { background:#CCE5FF; color:#004085; }
+.badge-done { background:#D4EDDA; color:#155724; }
+.badge-cancelled { background:#F8D7DA; color:#721C24; }
+
+.expand-btn { background:none; border:1.5px solid var(--border); border-radius:6px; padding:4px 10px; cursor:pointer; font-size:13px; color:#666; font-family:'Poppins',sans-serif; font-weight:600; }
+
+.btn-cancel { background:#FFF5F5; color:#DC3545; border:1.5px solid #FFCDD2; border-radius:6px; padding:5px 12px; font-size:11px; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; }
+
+/* Pagination */
+.pagination-row { display:flex; align-items:center; justify-content:space-between; padding:16px 24px; border-top:1px solid var(--border); }
+.page-info { font-size:13px; color:#888; }
+.page-btns { display:flex; gap:6px; }
+.page-btn { width:32px; height:32px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; cursor:pointer; border:1.5px solid var(--border); background:#fff; color:#666; text-decoration:none; }
+.page-btn.active { background:var(--primary); border-color:var(--primary); color:#fff; }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-name">Café<span>Desk</span></div>
+    <div class="logo-sub">Employee Portal</div>
+  </div>
+  <nav style="padding:12px 0; flex:1;">
+    <div class="nav-section">Menu</div>
+    <a href="#" class="nav-link"><span>🏠</span> Order Now</a>
+    <a href="#" class="nav-link active"><span>📋</span> My Orders</a>
+    <div class="nav-section">Account</div>
+    <a href="#" class="nav-link"><span>👤</span> Profile</a>
+    <a href="#" class="nav-link"><span>🚪</span> Logout</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="s-avatar">SA</div>
+    <div><div class="s-name">Sara Ahmed</div><div class="s-role">Employee · Room 304</div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">📋 My Orders</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;">SA</div>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <!-- Filter -->
+    <div class="filter-card">
+      <div class="filter-row">
+        <div class="filter-group">
+          <div class="filter-label">From Date</div>
+          <input type="date" class="filter-input" value="2024-01-01">
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">To Date</div>
+          <input type="date" class="filter-input" value="2024-01-19">
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Status</div>
+          <select class="filter-input">
+            <option>All Statuses</option>
+            <option>Processing</option>
+            <option>Out for Delivery</option>
+            <option>Done</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+        <button class="btn-filter">🔍 Search</button>
+        <button class="btn-clear">Clear</button>
+      </div>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="table-card">
+      <div class="table-header">
+        <span class="table-title">Order History</span>
+        <span class="orders-count">Showing 5 of 24 orders</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Date & Time</th>
+            <th>Items</th>
+            <th>Room</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span style="font-weight:700;color:var(--primary);">#1044</span></td>
+            <td><div style="font-weight:600;">Jan 19, 2024</div><div style="font-size:11px;color:#aaa;">11:45 AM</div></td>
+            <td>Cappuccino, Club Sandwich</td>
+            <td>Room 304</td>
+            <td style="font-weight:700;color:var(--primary);">EGP 53</td>
+            <td><span class="badge badge-processing">⏳ Processing</span></td>
+            <td>
+              <div style="display:flex;gap:6px;">
+                <button class="expand-btn">▼ Details</button>
+                <button class="btn-cancel">✕ Cancel</button>
+              </div>
+            </td>
+          </tr>
+          <!-- Expanded row -->
+          <tr class="expand-row">
+            <td colspan="7">
+              <div class="expand-inner">
+                <div class="expand-title">Order #1044 — Item Details</div>
+                <div class="order-items-grid">
+                  <div class="order-item-chip">
+                    <span class="oi-emoji">🧋</span>
+                    <div class="oi-details">
+                      <div class="oi-name">Cappuccino</div>
+                      <div class="oi-sub">Qty: 1 · EGP 18</div>
+                    </div>
+                  </div>
+                  <div class="order-item-chip">
+                    <span class="oi-emoji">🥪</span>
+                    <div class="oi-details">
+                      <div class="oi-name">Club Sandwich</div>
+                      <div class="oi-sub">Qty: 1 · EGP 35</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="expand-summary">
+                  <div class="sum-item"><div class="sum-label">Subtotal</div><div class="sum-val">EGP 53</div></div>
+                  <div class="sum-item"><div class="sum-label">Grand Total</div><div class="sum-val total">EGP 53</div></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><span style="font-weight:700;color:var(--primary);">#1043</span></td>
+            <td><div style="font-weight:600;">Jan 18, 2024</div><div style="font-size:11px;color:#aaa;">2:10 PM</div></td>
+            <td>Espresso × 2, Caesar Salad</td>
+            <td>Room 304</td>
+            <td style="font-weight:700;color:var(--primary);">EGP 56</td>
+            <td><span class="badge badge-delivery">🚚 Out for Delivery</span></td>
+            <td><button class="expand-btn">▼ Details</button></td>
+          </tr>
+          <tr>
+            <td><span style="font-weight:700;color:var(--primary);">#1042</span></td>
+            <td><div style="font-weight:600;">Jan 17, 2024</div><div style="font-size:11px;color:#aaa;">10:30 AM</div></td>
+            <td>Green Tea, Chocolate Cake</td>
+            <td>Room 304</td>
+            <td style="font-weight:700;color:var(--primary);">EGP 35</td>
+            <td><span class="badge badge-done">✅ Done</span></td>
+            <td><button class="expand-btn">▼ Details</button></td>
+          </tr>
+          <tr>
+            <td><span style="font-weight:700;color:var(--primary);">#1041</span></td>
+            <td><div style="font-weight:600;">Jan 16, 2024</div><div style="font-size:11px;color:#aaa;">12:00 PM</div></td>
+            <td>Mango Juice, Falafel Wrap</td>
+            <td>Room 304</td>
+            <td style="font-weight:700;color:var(--primary);">EGP 50</td>
+            <td><span class="badge badge-done">✅ Done</span></td>
+            <td><button class="expand-btn">▼ Details</button></td>
+          </tr>
+          <tr>
+            <td><span style="font-weight:700;color:var(--primary);">#1039</span></td>
+            <td><div style="font-weight:600;">Jan 15, 2024</div><div style="font-size:11px;color:#aaa;">3:45 PM</div></td>
+            <td>Herbal Tea</td>
+            <td>Room 304</td>
+            <td style="font-weight:700;color:var(--primary);">EGP 10</td>
+            <td><span class="badge badge-cancelled">✕ Cancelled</span></td>
+            <td><button class="expand-btn">▼ Details</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination-row">
+        <span class="page-info">Page 1 of 5</span>
+        <div class="page-btns">
+          <a href="#" class="page-btn">‹</a>
+          <a href="#" class="page-btn active">1</a>
+          <a href="#" class="page-btn">2</a>
+          <a href="#" class="page-btn">3</a>
+          <span class="page-btn" style="border:none;color:#aaa;">...</span>
+          <a href="#" class="page-btn">5</a>
+          <a href="#" class="page-btn">›</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

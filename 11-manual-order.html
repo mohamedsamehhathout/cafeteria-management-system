@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manual Order – CaféDesk Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6F4E37;--secondary:#D9A066;--bg:#F8F5F2;--sidebar:#2C1A0E;--border:#E8E0D8;--shadow:0 2px 20px rgba(111,78,55,.10);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;height:100vh;overflow:hidden;}
+.sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;}
+.sidebar-logo{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.08);}
+.logo-name{font-size:19px;font-weight:800;color:#fff;}.logo-name span{color:var(--secondary);}
+.logo-sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase;}
+.nav-link{display:flex;align-items:center;gap:11px;padding:10px 20px;color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;font-weight:500;border-left:3px solid transparent;}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.05);}
+.nav-link.active{color:var(--secondary);background:rgba(217,160,102,.12);border-left-color:var(--secondary);}
+.nav-section{font-size:10px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,.3);padding:12px 20px 4px;text-transform:uppercase;}
+.sidebar-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;margin-top:auto;}
+.s-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#D9A066,#B8824A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.topbar-title{font-size:20px;font-weight:800;color:#2C1A0E;}
+
+/* 3-panel layout */
+.panels{flex:1;display:grid;grid-template-columns:1fr 320px;overflow:hidden;}
+
+/* Left: catalog */
+.catalog-panel{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border);}
+.catalog-top{padding:16px 20px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;}
+.catalog-top-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.search-wrap{position:relative;flex:1;}
+.search-wrap input{width:100%;padding:9px 14px 9px 36px;border:1.5px solid var(--border);border-radius:50px;font-family:'Poppins',sans-serif;font-size:13px;background:var(--bg);outline:none;}
+.search-wrap input:focus{border-color:var(--primary);background:#fff;}
+.si{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#bbb;}
+.cat-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;}
+.cat-pill{padding:6px 14px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:#888;white-space:nowrap;}
+.cat-pill.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+.catalog-grid{flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-content:start;}
+.prod-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(111,78,55,.06);}
+.prod-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(111,78,55,.14);border-color:var(--secondary);}
+.prod-img{height:80px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:36px;}
+.prod-body{padding:10px 12px;}
+.prod-name{font-size:12px;font-weight:700;color:#2C1A0E;margin-bottom:2px;}
+.prod-price{font-size:13px;font-weight:800;color:var(--primary);}
+.prod-cat{font-size:10px;color:#bbb;}
+.prod-add{width:26px;height:26px;background:var(--primary);color:#fff;border:none;border-radius:50%;font-size:16px;cursor:pointer;float:right;margin-top:-22px;position:relative;z-index:1;}
+
+/* Right: order builder */
+.order-panel{background:#fff;display:flex;flex-direction:column;overflow:hidden;}
+.op-top{padding:16px 18px;border-bottom:1px solid var(--border);}
+.op-title{font-size:15px;font-weight:800;color:#2C1A0E;}
+.op-sub{font-size:11px;color:#aaa;}
+
+/* Customer selector */
+.cust-select-wrap{padding:14px 18px;border-bottom:1px solid var(--border);}
+.cust-label{font-size:11px;font-weight:700;color:#4A3020;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.cust-select-box{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--primary);border-radius:10px;background:rgba(111,78,55,.03);cursor:pointer;}
+.cust-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.cust-name{font-size:13px;font-weight:700;color:#2C1A0E;}
+.cust-room{font-size:11px;color:#aaa;}
+.cust-change{margin-left:auto;font-size:11.5px;color:var(--primary);font-weight:600;cursor:pointer;}
+
+/* Order items */
+.order-items{flex:1;overflow-y:auto;padding:10px 12px;}
+.oi{display:flex;align-items:center;gap:8px;padding:9px;background:var(--bg);border-radius:10px;margin-bottom:8px;}
+.oi-emoji{font-size:22px;flex-shrink:0;}
+.oi-info{flex:1;}
+.oi-name{font-size:12px;font-weight:700;color:#2C1A0E;}
+.oi-price{font-size:11px;color:var(--primary);font-weight:600;}
+.qty-ctrl{display:flex;align-items:center;gap:5px;}
+.qb{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#444;}
+.qn{font-size:12px;font-weight:700;min-width:18px;text-align:center;}
+.oi-rm{color:#DC3545;font-size:14px;cursor:pointer;padding:3px;}
+
+/* Footer */
+.op-footer{padding:14px 18px;border-top:1px solid var(--border);}
+.fp-row{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px;}
+.fp-row.total{font-size:18px;font-weight:800;color:var(--primary);border-top:1px dashed var(--border);padding-top:10px;margin-top:4px;}
+.fp-label{color:#888;}
+.fp-val{font-weight:700;color:#2C1A0E;}
+.note-input{width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:12px;resize:none;height:52px;outline:none;margin-bottom:10px;background:#fafafa;}
+.note-input:focus{border-color:var(--primary);}
+.btn-confirm{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#8B6347);color:#fff;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(111,78,55,.28);}
+.btn-clear{width:100%;padding:9px;background:#fff;color:#888;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+  <div class="sidebar-logo"><div class="logo-name">Café<span>Desk</span></div><div class="logo-sub">Admin Panel</div></div>
+  <nav style="padding:12px 0;flex:1;">
+    <div class="nav-section">Overview</div><a href="#" class="nav-link"><span>📊</span> Dashboard</a>
+    <div class="nav-section">Catalog</div><a href="#" class="nav-link"><span>🍽️</span> Products</a><a href="#" class="nav-link"><span>📁</span> Categories</a>
+    <div class="nav-section">Orders</div>
+    <a href="#" class="nav-link"><span>⚡</span> Active Orders <span style="background:#DC3545;color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-left:auto;">7</span></a>
+    <a href="#" class="nav-link active"><span>✍️</span> Manual Order</a>
+    <div class="nav-section">Users</div><a href="#" class="nav-link"><span>👥</span> Users</a>
+    <div class="nav-section">Finance</div><a href="#" class="nav-link"><span>💰</span> Reports</a>
+  </nav>
+  <div class="sidebar-user"><div class="s-avatar">AM</div><div><div style="font-size:12px;font-weight:600;color:#fff;">Ahmed Mostafa</div><div style="font-size:10px;color:rgba(255,255,255,.4);">Administrator</div></div></div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">✍️ Manual Order</div>
+      <div style="font-size:12px;color:#aaa;">Place orders on behalf of employees at the counter</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;"><div style="padding:8px 16px;background:rgba(40,167,69,.1);color:#28A745;border-radius:8px;font-size:12px;font-weight:700;border:1.5px solid rgba(40,167,69,.2);">🟢 Cafeteria Open</div><div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#D9A066,#B8824A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:14px;">AM</div></div>
+  </div>
+
+  <div class="panels">
+    <!-- Catalog -->
+    <div class="catalog-panel">
+      <div class="catalog-top">
+        <div class="catalog-top-row">
+          <div class="search-wrap"><span class="si">🔍</span><input placeholder="Search menu items…"></div>
+          <select style="padding:9px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;background:#fff;outline:none;"><option>All (32)</option></select>
+        </div>
+        <div class="cat-pills">
+          <div class="cat-pill active">All</div>
+          <div class="cat-pill">☕ Hot Drinks</div>
+          <div class="cat-pill">🧃 Cold Drinks</div>
+          <div class="cat-pill">🥪 Sandwiches</div>
+          <div class="cat-pill">🥗 Salads</div>
+          <div class="cat-pill">🍰 Desserts</div>
+          <div class="cat-pill">🍱 Meals</div>
+        </div>
+      </div>
+
+      <div class="catalog-grid">
+        <div class="prod-card"><div class="prod-img">🧋</div><div class="prod-body"><div class="prod-cat">Hot Drinks</div><div class="prod-name">Cappuccino</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 18</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#FFF5F0;">☕</div><div class="prod-body"><div class="prod-cat">Hot Drinks</div><div class="prod-name">Espresso</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 12</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#F5FFF5;">🍵</div><div class="prod-body"><div class="prod-cat">Hot Drinks</div><div class="prod-name">Green Tea</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 10</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#F0FFF8;">🥤</div><div class="prod-body"><div class="prod-cat">Cold Drinks</div><div class="prod-name">Fresh Juice</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 20</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card" style="border-color:var(--secondary);box-shadow:0 0 0 2px rgba(217,160,102,.2);"><div class="prod-img" style="background:#FFF5F5;">🥪</div><div class="prod-body"><div class="prod-cat">Sandwiches</div><div class="prod-name">Club Sandwich</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 35</div><button class="prod-add" style="background:var(--secondary);">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#F5F5FF;">🧆</div><div class="prod-body"><div class="prod-cat">Sandwiches</div><div class="prod-name">Falafel Wrap</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 28</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#F0F8FF;">🥗</div><div class="prod-body"><div class="prod-cat">Salads</div><div class="prod-name">Caesar Salad</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 32</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#FFF8EE;">🍰</div><div class="prod-body"><div class="prod-cat">Desserts</div><div class="prod-name">Chocolate Cake</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 25</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img">🧃</div><div class="prod-body"><div class="prod-cat">Cold Drinks</div><div class="prod-name">Mango Juice</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 22</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#F5FFF5;">🍱</div><div class="prod-body"><div class="prod-cat">Meals</div><div class="prod-name">Rice Box</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 45</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#FFF0F5;">🍩</div><div class="prod-body"><div class="prod-cat">Desserts</div><div class="prod-name">Donut</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 8</div><button class="prod-add">+</button></div></div></div>
+        <div class="prod-card"><div class="prod-img" style="background:#FFFBE0;">🫖</div><div class="prod-body"><div class="prod-cat">Hot Drinks</div><div class="prod-name">Herbal Tea</div><div style="display:flex;align-items:center;justify-content:space-between;"><div class="prod-price">EGP 10</div><button class="prod-add">+</button></div></div></div>
+      </div>
+    </div>
+
+    <!-- Order Panel -->
+    <div class="order-panel">
+      <div class="op-top"><div class="op-title">🧾 Order Builder</div><div class="op-sub">3 items · Walk-in counter order</div></div>
+      <div class="cust-select-wrap">
+        <div class="cust-label">Customer</div>
+        <div class="cust-select-box">
+          <div class="cust-avatar">SA</div>
+          <div><div class="cust-name">Sara Ahmed</div><div class="cust-room">Room 304 · Engineering</div></div>
+          <span class="cust-change">Change</span>
+        </div>
+      </div>
+      <div class="order-items">
+        <div class="oi"><div class="oi-emoji">🧋</div><div class="oi-info"><div class="oi-name">Cappuccino</div><div class="oi-price">EGP 18 each</div></div><div class="qty-ctrl"><button class="qb">−</button><span class="qn">2</span><button class="qb">+</button></div><span class="oi-rm">✕</span></div>
+        <div class="oi"><div class="oi-emoji">🥪</div><div class="oi-info"><div class="oi-name">Club Sandwich</div><div class="oi-price">EGP 35 each</div></div><div class="qty-ctrl"><button class="qb">−</button><span class="qn">1</span><button class="qb">+</button></div><span class="oi-rm">✕</span></div>
+        <div class="oi"><div class="oi-emoji">☕</div><div class="oi-info"><div class="oi-name">Espresso</div><div class="oi-price">EGP 12 each</div></div><div class="qty-ctrl"><button class="qb">−</button><span class="qn">1</span><button class="qb">+</button></div><span class="oi-rm">✕</span></div>
+      </div>
+      <div class="op-footer">
+        <div style="margin-bottom:10px;"><div style="font-size:11px;font-weight:700;color:#4A3020;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Order Notes</div><textarea class="note-input" placeholder="Special requests or notes…">No sugar in espresso</textarea></div>
+        <div class="fp-row"><span class="fp-label">Subtotal (4 items)</span><span class="fp-val">EGP 83</span></div>
+        <div class="fp-row total"><span class="fp-label">Total</span><span>EGP 83</span></div>
+        <button class="btn-confirm" style="margin-top:12px;">✓ Place Order</button>
+        <button class="btn-clear">🗑️ Clear Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

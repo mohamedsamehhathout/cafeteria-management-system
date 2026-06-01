@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard – CaféDesk</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --primary:#6F4E37; --secondary:#D9A066; --bg:#F8F5F2; --sidebar:#2C1A0E; --border:#E8E0D8; --shadow:0 2px 20px rgba(111,78,55,0.10); }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Poppins',sans-serif; background:var(--bg); display:flex; min-height:100vh; }
+.sidebar { width:240px; background:var(--sidebar); display:flex; flex-direction:column; flex-shrink:0; min-height:100vh; }
+.sidebar-logo { padding:22px 20px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.logo-name { font-size:19px; font-weight:800; color:#fff; }
+.logo-name span { color:var(--secondary); }
+.logo-sub { font-size:10px; color:rgba(255,255,255,0.4); letter-spacing:1px; text-transform:uppercase; }
+.nav-link { display:flex; align-items:center; gap:11px; padding:10px 20px; color:rgba(255,255,255,0.6); text-decoration:none; font-size:13px; font-weight:500; border-left:3px solid transparent; transition:all 0.2s; }
+.nav-link:hover { color:#fff; background:rgba(255,255,255,0.05); }
+.nav-link.active { color:var(--secondary); background:rgba(217,160,102,0.12); border-left-color:var(--secondary); }
+.nav-icon { font-size:15px; width:20px; text-align:center; }
+.nav-section { font-size:10px; font-weight:600; letter-spacing:1.5px; color:rgba(255,255,255,0.3); padding:12px 20px 4px; text-transform:uppercase; }
+.sidebar-user { padding:14px 20px; border-top:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:10px; margin-top:auto; }
+.s-avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#D9A066,#B8824A); display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; font-size:13px; }
+.s-name { font-size:12px; font-weight:600; color:#fff; }
+.s-role { font-size:10px; color:rgba(255,255,255,0.4); }
+
+.main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+.topbar { background:#fff; border-bottom:1px solid var(--border); padding:0 28px; height:64px; display:flex; align-items:center; justify-content:space-between; }
+.topbar-left .title { font-size:20px; font-weight:800; color:#2C1A0E; }
+.topbar-left .date { font-size:12px; color:#aaa; }
+.topbar-right { display:flex; align-items:center; gap:14px; }
+.notif-btn { width:38px; height:38px; border-radius:50%; background:var(--bg); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:17px; cursor:pointer; position:relative; }
+.notif-badge { position:absolute; top:7px; right:7px; width:7px; height:7px; background:#DC3545; border-radius:50%; border:2px solid #fff; }
+.badge-pending { background:#DC3545; color:#fff; border-radius:50%; width:18px; height:18px; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; position:absolute; top:-5px; right:-5px; }
+
+.page-body { padding:28px; overflow-y:auto; flex:1; }
+
+/* Greeting */
+.greeting { margin-bottom:24px; }
+.greeting h2 { font-size:22px; font-weight:800; color:#2C1A0E; }
+.greeting p { font-size:13px; color:#888; }
+
+/* Stats grid */
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:24px; }
+.stat-card { background:#fff; border-radius:14px; border:1px solid var(--border); padding:22px; box-shadow:var(--shadow); display:flex; align-items:center; gap:18px; }
+.stat-icon { width:54px; height:54px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+.stat-label { font-size:12px; color:#aaa; font-weight:500; margin-bottom:2px; }
+.stat-value { font-size:26px; font-weight:800; color:#2C1A0E; line-height:1.1; }
+.stat-trend { font-size:11px; margin-top:3px; font-weight:600; }
+.up { color:#28A745; }
+.down { color:#DC3545; }
+
+/* Chart area */
+.charts-row { display:grid; grid-template-columns:2fr 1fr; gap:18px; margin-bottom:24px; }
+.chart-card { background:#fff; border-radius:14px; border:1px solid var(--border); padding:22px; box-shadow:var(--shadow); }
+.chart-title { font-size:14px; font-weight:700; color:#2C1A0E; margin-bottom:4px; }
+.chart-sub { font-size:12px; color:#aaa; margin-bottom:20px; }
+
+/* Simple bar chart */
+.bar-chart { display:flex; align-items:flex-end; gap:8px; height:160px; }
+.bar-group { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; }
+.bar { border-radius:6px 6px 0 0; width:100%; }
+.bar-label { font-size:10px; color:#aaa; font-weight:600; }
+
+/* Donut chart placeholder */
+.donut-wrap { display:flex; flex-direction:column; align-items:center; }
+.donut-svg { width:140px; height:140px; }
+.legend { display:grid; gap:8px; margin-top:16px; width:100%; }
+.leg-item { display:flex; align-items:center; gap:8px; font-size:12px; }
+.leg-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.leg-label { color:#666; flex:1; }
+.leg-val { font-weight:700; color:#2C1A0E; }
+
+/* Recent orders */
+.bottom-row { display:grid; grid-template-columns:3fr 2fr; gap:18px; }
+.list-card { background:#fff; border-radius:14px; border:1px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
+.list-header { padding:18px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.list-title { font-size:14px; font-weight:700; color:#2C1A0E; }
+.view-all { font-size:12px; color:var(--primary); font-weight:600; text-decoration:none; }
+
+table { width:100%; border-collapse:collapse; }
+thead th { background:#FAFAF8; padding:10px 20px; text-align:left; font-size:10.5px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#bbb; border-bottom:1px solid var(--border); }
+tbody td { padding:13px 20px; border-bottom:1px solid var(--border); font-size:12.5px; color:#444; vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+
+.badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+.badge-processing { background:#FFF3CD; color:#856404; }
+.badge-delivery { background:#CCE5FF; color:#004085; }
+.badge-done { background:#D4EDDA; color:#155724; }
+
+/* Top products */
+.prod-list-item { display:flex; align-items:center; gap:12px; padding:12px 22px; border-bottom:1px solid var(--border); }
+.prod-list-item:last-child { border-bottom:none; }
+.prod-emoji { font-size:28px; width:44px; height:44px; background:var(--bg); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.prod-info { flex:1; }
+.prod-info-name { font-size:13px; font-weight:700; color:#2C1A0E; }
+.prod-info-cat { font-size:11px; color:#aaa; }
+.prod-bar { flex:1; height:6px; background:#eee; border-radius:3px; overflow:hidden; margin-top:4px; }
+.prod-bar-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--primary),var(--secondary)); }
+.prod-count { font-size:12px; font-weight:700; color:var(--primary); }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-name">Café<span>Desk</span></div>
+    <div class="logo-sub">Admin Panel</div>
+  </div>
+  <nav style="padding:12px 0; flex:1; overflow-y:auto;">
+    <div class="nav-section">Overview</div>
+    <a href="#" class="nav-link active"><span class="nav-icon">📊</span>Dashboard</a>
+    <div class="nav-section">Catalog</div>
+    <a href="#" class="nav-link"><span class="nav-icon">🍽️</span>Products</a>
+    <a href="#" class="nav-link"><span class="nav-icon">📁</span>Categories</a>
+    <div class="nav-section">Orders</div>
+    <a href="#" class="nav-link"><span class="nav-icon">⚡</span>Active Orders <span style="background:#DC3545;color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-left:auto;">7</span></a>
+    <a href="#" class="nav-link"><span class="nav-icon">✍️</span>Manual Order</a>
+    <div class="nav-section">Users</div>
+    <a href="#" class="nav-link"><span class="nav-icon">👥</span>Users</a>
+    <div class="nav-section">Finance</div>
+    <a href="#" class="nav-link"><span class="nav-icon">💰</span>Checks / Reports</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="s-avatar">AM</div>
+    <div><div class="s-name">Ahmed Mostafa</div><div class="s-role">Administrator</div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="title">Dashboard</div>
+      <div class="date">Saturday, 19 January 2024 · 12:34 PM</div>
+    </div>
+    <div class="topbar-right">
+      <div class="notif-btn" style="position:relative;">🔔<div class="notif-badge"></div></div>
+      <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#D9A066,#B8824A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:14px;">AM</div>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="greeting">
+      <h2>Good afternoon, Ahmed 👋</h2>
+      <p>Here's what's happening at the cafeteria today.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#FFF3E0;">☕</div>
+        <div>
+          <div class="stat-label">Orders Today</div>
+          <div class="stat-value">48</div>
+          <div class="stat-trend up">↑ 12% vs yesterday</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#E8F5E9;">💰</div>
+        <div>
+          <div class="stat-label">Revenue Today</div>
+          <div class="stat-value">EGP 2,340</div>
+          <div class="stat-trend up">↑ 8% vs yesterday</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#FCE4EC;">⚡</div>
+        <div>
+          <div class="stat-label">Active Orders</div>
+          <div class="stat-value">7</div>
+          <div class="stat-trend" style="color:#FFA726;">3 out for delivery</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#E3F2FD;">⭐</div>
+        <div>
+          <div class="stat-label">Top Product</div>
+          <div class="stat-value" style="font-size:16px;line-height:1.4;">Cappuccino</div>
+          <div class="stat-trend" style="color:#888;">23 orders today</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-title">Orders This Week</div>
+        <div class="chart-sub">Daily order volume — Jan 13–19, 2024</div>
+        <div class="bar-chart">
+          <div class="bar-group">
+            <div class="bar" style="height:60%;background:linear-gradient(180deg,var(--secondary),var(--primary));opacity:0.6;"></div>
+            <div class="bar-label">Sat</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar" style="height:75%;background:linear-gradient(180deg,var(--secondary),var(--primary));opacity:0.6;"></div>
+            <div class="bar-label">Sun</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar" style="height:85%;background:linear-gradient(180deg,var(--secondary),var(--primary));opacity:0.8;"></div>
+            <div class="bar-label">Mon</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar" style="height:70%;background:linear-gradient(180deg,var(--secondary),var(--primary));opacity:0.7;"></div>
+            <div class="bar-label">Tue</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar" style="height:90%;background:linear-gradient(180deg,var(--secondary),var(--primary));opacity:0.9;"></div>
+            <div class="bar-label">Wed</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar" style="height:65%;background:linear-gradient(180deg,var(--secondary),var(--primary));opacity:0.65;"></div>
+            <div class="bar-label">Thu</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar" style="height:100%;background:linear-gradient(180deg,var(--secondary),var(--primary));"></div>
+            <div class="bar-label" style="color:var(--primary);font-weight:700;">Fri</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+          <span style="font-size:12px;color:#aaa;">Mon–Fri avg: 42 orders</span>
+          <span style="font-size:12px;font-weight:700;color:var(--primary);">Peak: 48 today</span>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title">Revenue by Category</div>
+        <div class="chart-sub">This week breakdown</div>
+        <div class="donut-wrap">
+          <svg class="donut-svg" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#E8E0D8" stroke-width="4"/>
+            <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="var(--primary)" stroke-width="4" stroke-dasharray="38 62" stroke-dashoffset="25"/>
+            <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="var(--secondary)" stroke-width="4" stroke-dasharray="25 75" stroke-dashoffset="-13"/>
+            <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#28A745" stroke-width="4" stroke-dasharray="20 80" stroke-dashoffset="-38"/>
+            <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#17A2B8" stroke-width="4" stroke-dasharray="17 83" stroke-dashoffset="-58"/>
+            <text x="21" y="21" text-anchor="middle" dominant-baseline="middle" font-size="5" font-weight="800" fill="#2C1A0E">EGP</text>
+            <text x="21" y="26" text-anchor="middle" font-size="3.5" fill="#888">8,420</text>
+          </svg>
+          <div class="legend">
+            <div class="leg-item"><div class="leg-dot" style="background:var(--primary);"></div><span class="leg-label">Hot Drinks</span><span class="leg-val">38%</span></div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--secondary);"></div><span class="leg-label">Sandwiches</span><span class="leg-val">25%</span></div>
+            <div class="leg-item"><div class="leg-dot" style="background:#28A745;"></div><span class="leg-label">Cold Drinks</span><span class="leg-val">20%</span></div>
+            <div class="leg-item"><div class="leg-dot" style="background:#17A2B8;"></div><span class="leg-label">Other</span><span class="leg-val">17%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div class="bottom-row">
+      <div class="list-card">
+        <div class="list-header">
+          <span class="list-title">Recent Orders</span>
+          <a href="#" class="view-all">View All →</a>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Order #</th><th>Employee</th><th>Room</th><th>Total</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700;color:var(--primary);">#1044</td>
+              <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">SA</div>Sara Ahmed</div></td>
+              <td>Room 304</td>
+              <td style="font-weight:700;">EGP 53</td>
+              <td><span class="badge badge-processing">Processing</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:var(--primary);">#1043</td>
+              <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#28A745,#20c997);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">MH</div>Mohamed Hassan</div></td>
+              <td>Room 201</td>
+              <td style="font-weight:700;">EGP 78</td>
+              <td><span class="badge badge-delivery">Out for Delivery</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:var(--primary);">#1042</td>
+              <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#DC3545,#e83e8c);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">NM</div>Nadia Mostafa</div></td>
+              <td>Room 110</td>
+              <td style="font-weight:700;">EGP 35</td>
+              <td><span class="badge badge-done">Done</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700;color:var(--primary);">#1041</td>
+              <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#17A2B8,#6f42c1);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">KA</div>Karim Ali</div></td>
+              <td>Room 405</td>
+              <td style="font-weight:700;">EGP 92</td>
+              <td><span class="badge badge-done">Done</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="list-card">
+        <div class="list-header">
+          <span class="list-title">🏆 Top Products</span>
+          <a href="#" class="view-all">View All →</a>
+        </div>
+        <div class="prod-list-item">
+          <div class="prod-emoji">🧋</div>
+          <div class="prod-info">
+            <div class="prod-info-name">Cappuccino</div>
+            <div class="prod-info-cat">Hot Drinks</div>
+            <div class="prod-bar"><div class="prod-bar-fill" style="width:92%;"></div></div>
+          </div>
+          <div class="prod-count">23</div>
+        </div>
+        <div class="prod-list-item">
+          <div class="prod-emoji">🥪</div>
+          <div class="prod-info">
+            <div class="prod-info-name">Club Sandwich</div>
+            <div class="prod-info-cat">Sandwiches</div>
+            <div class="prod-bar"><div class="prod-bar-fill" style="width:76%;"></div></div>
+          </div>
+          <div class="prod-count">19</div>
+        </div>
+        <div class="prod-list-item">
+          <div class="prod-emoji">☕</div>
+          <div class="prod-info">
+            <div class="prod-info-name">Espresso</div>
+            <div class="prod-info-cat">Hot Drinks</div>
+            <div class="prod-bar"><div class="prod-bar-fill" style="width:60%;"></div></div>
+          </div>
+          <div class="prod-count">15</div>
+        </div>
+        <div class="prod-list-item">
+          <div class="prod-emoji">🧃</div>
+          <div class="prod-info">
+            <div class="prod-info-name">Mango Juice</div>
+            <div class="prod-info-cat">Cold Drinks</div>
+            <div class="prod-bar"><div class="prod-bar-fill" style="width:48%;"></div></div>
+          </div>
+          <div class="prod-count">12</div>
+        </div>
+        <div class="prod-list-item">
+          <div class="prod-emoji">🍰</div>
+          <div class="prod-info">
+            <div class="prod-info-name">Chocolate Cake</div>
+            <div class="prod-info-cat">Desserts</div>
+            <div class="prod-bar"><div class="prod-bar-fill" style="width:36%;"></div></div>
+          </div>
+          <div class="prod-count">9</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
