@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Categories – CaféDesk Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6F4E37;--secondary:#D9A066;--bg:#F8F5F2;--sidebar:#2C1A0E;--border:#E8E0D8;--shadow:0 2px 20px rgba(111,78,55,.10);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-height:100vh;}
+
+/* ── Sidebar ── */
+.sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;min-height:100vh;}
+.sidebar-logo{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.08);}
+.logo-name{font-size:19px;font-weight:800;color:#fff;}
+.logo-name span{color:var(--secondary);}
+.logo-sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase;}
+.nav-link{display:flex;align-items:center;gap:11px;padding:10px 20px;color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;font-weight:500;border-left:3px solid transparent;transition:all .2s;}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.05);}
+.nav-link.active{color:var(--secondary);background:rgba(217,160,102,.12);border-left-color:var(--secondary);}
+.nav-section{font-size:10px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,.3);padding:12px 20px 4px;text-transform:uppercase;}
+.sidebar-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;margin-top:auto;}
+.s-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#D9A066,#B8824A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;}
+
+/* ── Main ── */
+.main{flex:1;display:flex;flex-direction:column;}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-title{font-size:20px;font-weight:800;color:#2C1A0E;}
+.page-body{padding:28px;}
+
+/* ── Stat strip ── */
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.scard{background:#fff;border-radius:12px;border:1px solid var(--border);padding:18px 20px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;}
+.scard-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.scard-label{font-size:11.5px;color:#aaa;font-weight:500;}
+.scard-val{font-size:24px;font-weight:800;color:#2C1A0E;line-height:1.1;}
+
+/* ── Toolbar ── */
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.toolbar-left{display:flex;align-items:center;gap:10px;}
+.search-box{position:relative;}
+.search-box input{padding:9px 14px 9px 36px;border:1.5px solid var(--border);border-radius:50px;font-family:'Poppins',sans-serif;font-size:13px;background:var(--bg);outline:none;width:260px;}
+.search-box input:focus{border-color:var(--primary);background:#fff;}
+.si{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#bbb;}
+.view-toggle{display:flex;gap:2px;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;}
+.vt-btn{padding:8px 12px;font-size:14px;cursor:pointer;border:none;background:transparent;color:#aaa;transition:all .2s;}
+.vt-btn.active{background:var(--primary);color:#fff;}
+.btn-add{padding:10px 20px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;}
+
+/* ── Category grid cards ── */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:24px;}
+.cat-card{background:#fff;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;cursor:pointer;transition:all .25s;position:relative;}
+.cat-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(111,78,55,.16);border-color:var(--secondary);}
+.cat-card-banner{height:100px;display:flex;align-items:center;justify-content:center;font-size:54px;position:relative;}
+.cat-card-status{position:absolute;top:10px;right:10px;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:700;}
+.status-active{background:#D4EDDA;color:#155724;}
+.status-hidden{background:#F8D7DA;color:#721C24;}
+.cat-card-body{padding:14px 16px;}
+.cat-card-name{font-size:15px;font-weight:800;color:#2C1A0E;margin-bottom:2px;}
+.cat-card-sub{font-size:12px;color:#aaa;margin-bottom:12px;}
+.cat-card-meta{display:flex;align-items:center;justify-content:space-between;}
+.meta-pill{background:var(--bg);border-radius:20px;padding:4px 12px;font-size:11.5px;font-weight:700;color:var(--primary);}
+.cat-card-actions{display:flex;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.btn-edit{flex:1;padding:7px;background:rgba(111,78,55,.07);color:var(--primary);border:1.5px solid rgba(111,78,55,.18);border-radius:7px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;cursor:pointer;text-align:center;}
+.btn-hide{flex:1;padding:7px;background:rgba(253,126,20,.07);color:#FD7E14;border:1.5px solid rgba(253,126,20,.18);border-radius:7px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;cursor:pointer;text-align:center;}
+.btn-del{padding:7px 10px;background:rgba(220,53,69,.07);color:#DC3545;border:1.5px solid rgba(220,53,69,.18);border-radius:7px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+
+/* ── Table view (hidden by default, shown as reference) ── */
+.table-card{background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;}
+.tc-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.tc-title{font-size:15px;font-weight:700;color:#2C1A0E;}
+.tc-sub{font-size:12px;color:#aaa;}
+table{width:100%;border-collapse:collapse;}
+thead th{background:#FAFAF8;padding:12px 20px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#bbb;border-bottom:2px solid var(--border);}
+tbody td{padding:15px 20px;border-bottom:1px solid var(--border);font-size:13px;color:#444;vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:#faf8f6;}
+
+.cat-cell{display:flex;align-items:center;gap:14px;}
+.cat-thumb{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.cat-cell-name{font-size:13.5px;font-weight:800;color:#2C1A0E;}
+.cat-cell-id{font-size:11px;color:#bbb;}
+.cat-cell-desc{font-size:12px;color:#888;margin-top:2px;}
+.badge{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:11.5px;font-weight:700;}
+.badge-active{background:#D4EDDA;color:#155724;}
+.badge-hidden{background:#F8D7DA;color:#721C24;}
+.sort-bar{display:flex;align-items:center;gap:4px;font-size:10.5px;color:#bbb;cursor:pointer;}
+.sort-bar:hover{color:var(--primary);}
+
+.action-group{display:flex;gap:6px;align-items:center;}
+.act-btn{padding:6px 14px;border-radius:6px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid transparent;}
+.act-edit{background:rgba(111,78,55,.07);color:var(--primary);border-color:rgba(111,78,55,.18);}
+.act-hide{background:rgba(253,126,20,.07);color:#FD7E14;border-color:rgba(253,126,20,.18);}
+.act-del{background:rgba(220,53,69,.07);color:#DC3545;border-color:rgba(220,53,69,.18);}
+.drag-handle{color:#ccc;font-size:18px;cursor:grab;padding:0 6px 0 0;}
+.drag-handle:hover{color:var(--primary);}
+
+.pagination-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-top:1px solid var(--border);}
+.page-info{font-size:12px;color:#888;}
+.page-btns{display:flex;gap:5px;}
+.page-btn{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:#666;}
+.page-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+/* ── Empty slot card ── */
+.cat-card-empty{background:#fff;border-radius:16px;border:2px dashed var(--border);box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:200px;cursor:pointer;transition:all .25s;}
+.cat-card-empty:hover{border-color:var(--secondary);background:rgba(217,160,102,.03);}
+.empty-plus{font-size:36px;color:#ddd;}
+.empty-label{font-size:13px;font-weight:700;color:#bbb;}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-name">Café<span>Desk</span></div>
+    <div class="logo-sub">Admin Panel</div>
+  </div>
+  <nav style="padding:12px 0;flex:1;">
+    <div class="nav-section">Overview</div>
+    <a href="#" class="nav-link"><span>📊</span> Dashboard</a>
+    <div class="nav-section">Catalog</div>
+    <a href="#" class="nav-link"><span>🍽️</span> Products</a>
+    <a href="#" class="nav-link active"><span>📁</span> Categories</a>
+    <div class="nav-section">Orders</div>
+    <a href="#" class="nav-link"><span>⚡</span> Active Orders
+      <span style="background:#DC3545;color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-left:auto;">7</span>
+    </a>
+    <a href="#" class="nav-link"><span>✍️</span> Manual Order</a>
+    <div class="nav-section">Users</div>
+    <a href="#" class="nav-link"><span>👥</span> Users</a>
+    <div class="nav-section">Finance</div>
+    <a href="#" class="nav-link"><span>💰</span> Checks / Reports</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="s-avatar">AM</div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:#fff;">Ahmed Mostafa</div>
+      <div style="font-size:10px;color:rgba(255,255,255,.4);">Administrator</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">📁 Categories</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#D9A066,#B8824A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:14px;">AM</div>
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <!-- Stats -->
+    <div class="stat-strip">
+      <div class="scard">
+        <div class="scard-icon" style="background:#FFF3E0;">📁</div>
+        <div><div class="scard-label">Total Categories</div><div class="scard-val">7</div></div>
+      </div>
+      <div class="scard">
+        <div class="scard-icon" style="background:#E8F5E9;">✅</div>
+        <div><div class="scard-label">Visible on Menu</div><div class="scard-val">6</div></div>
+      </div>
+      <div class="scard">
+        <div class="scard-icon" style="background:#FCE4EC;">🙈</div>
+        <div><div class="scard-label">Hidden</div><div class="scard-val">1</div></div>
+      </div>
+      <div class="scard">
+        <div class="scard-icon" style="background:#E3F2FD;">🍽️</div>
+        <div><div class="scard-label">Total Products</div><div class="scard-val">32</div></div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="search-box">
+          <span class="si">🔍</span>
+          <input placeholder="Search categories…">
+        </div>
+        <div class="view-toggle">
+          <button class="vt-btn active" title="Grid view">⊞</button>
+          <button class="vt-btn" title="List view">☰</button>
+        </div>
+      </div>
+      <button class="btn-add">+ Add Category</button>
+    </div>
+
+    <!-- Category Grid -->
+    <div class="cat-grid">
+
+      <!-- Hot Drinks -->
+      <div class="cat-card">
+        <div class="cat-card-banner" style="background:linear-gradient(135deg,#FFF5EE,#FFE4CC);">
+          ☕
+          <span class="cat-card-status status-active">● Visible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Hot Drinks</div>
+          <div class="cat-card-sub">Espresso, tea, cappuccino &amp; more</div>
+          <div class="cat-card-meta">
+            <span class="meta-pill">12 Products</span>
+            <span style="font-size:11px;color:#aaa;">Sort: 1st</span>
+          </div>
+          <div class="cat-card-actions">
+            <button class="btn-edit">✏️ Edit</button>
+            <button class="btn-hide">👁️ Hide</button>
+            <button class="btn-del">🗑️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cold Drinks -->
+      <div class="cat-card">
+        <div class="cat-card-banner" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);">
+          🧃
+          <span class="cat-card-status status-active">● Visible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Cold Drinks</div>
+          <div class="cat-card-sub">Fresh juices, iced beverages</div>
+          <div class="cat-card-meta">
+            <span class="meta-pill">7 Products</span>
+            <span style="font-size:11px;color:#aaa;">Sort: 2nd</span>
+          </div>
+          <div class="cat-card-actions">
+            <button class="btn-edit">✏️ Edit</button>
+            <button class="btn-hide">👁️ Hide</button>
+            <button class="btn-del">🗑️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sandwiches -->
+      <div class="cat-card">
+        <div class="cat-card-banner" style="background:linear-gradient(135deg,#FFF8E1,#FFECB3);">
+          🥪
+          <span class="cat-card-status status-active">● Visible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Sandwiches</div>
+          <div class="cat-card-sub">Club, falafel, wraps &amp; toasts</div>
+          <div class="cat-card-meta">
+            <span class="meta-pill">5 Products</span>
+            <span style="font-size:11px;color:#aaa;">Sort: 3rd</span>
+          </div>
+          <div class="cat-card-actions">
+            <button class="btn-edit">✏️ Edit</button>
+            <button class="btn-hide">👁️ Hide</button>
+            <button class="btn-del">🗑️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salads -->
+      <div class="cat-card">
+        <div class="cat-card-banner" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);">
+          🥗
+          <span class="cat-card-status status-active">● Visible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Salads</div>
+          <div class="cat-card-sub">Caesar, Greek, mixed greens</div>
+          <div class="cat-card-meta">
+            <span class="meta-pill">4 Products</span>
+            <span style="font-size:11px;color:#aaa;">Sort: 4th</span>
+          </div>
+          <div class="cat-card-actions">
+            <button class="btn-edit">✏️ Edit</button>
+            <button class="btn-hide">👁️ Hide</button>
+            <button class="btn-del">🗑️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meals -->
+      <div class="cat-card">
+        <div class="cat-card-banner" style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7);">
+          🍱
+          <span class="cat-card-status status-active">● Visible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Main Meals</div>
+          <div class="cat-card-sub">Rice boxes, daily specials</div>
+          <div class="cat-card-meta">
+            <span class="meta-pill">2 Products</span>
+            <span style="font-size:11px;color:#aaa;">Sort: 5th</span>
+          </div>
+          <div class="cat-card-actions">
+            <button class="btn-edit">✏️ Edit</button>
+            <button class="btn-hide">👁️ Hide</button>
+            <button class="btn-del">🗑️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desserts -->
+      <div class="cat-card">
+        <div class="cat-card-banner" style="background:linear-gradient(135deg,#FCE4EC,#F8BBD9);">
+          🍰
+          <span class="cat-card-status status-active">● Visible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-card-name">Desserts</div>
+          <div class="cat-card-sub">Cakes, donuts, pastries</div>
+          <div class="cat-card-meta">
+            <span class="meta-pill">6 Products</span>
+            <span style="font-size:11px;color:#aaa;">Sort: 6th</span>
+          </div>
+          <div class="cat-card-actions">
+            <button class="btn-edit">✏️ Edit</button>
+            <button class="btn-hide">👁️ Hide</button>
+            <button class="btn-del">🗑️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Snacks (hidden) -->
+      <div class="cat-card" style="opacity:.72;">
+        <div class="cat-card-banner" style="background:linear-gradient(135deg,#F5F5F5,#EEEEEE);">
+          🥜
+          <span class="cat-card-status status-hidden">● Hidden</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-card-name" style="color:#aaa;">Snacks</div>
+          <div class="cat-card-sub">Chips, nuts, crackers</div>
+          <div class="cat-card-meta">
+            <span class="meta-pill" style="color:#aaa;">1 Product</span>
+            <span style="font-size:11px;color:#ccc;">Sort: 7th</span>
+          </div>
+          <div class="cat-card-actions">
+            <button class="btn-edit">✏️ Edit</button>
+            <button class="btn-hide" style="background:rgba(40,167,69,.07);color:#28A745;border-color:rgba(40,167,69,.18);">👁️ Show</button>
+            <button class="btn-del">🗑️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add new slot -->
+      <div class="cat-card-empty">
+        <div class="empty-plus">＋</div>
+        <div class="empty-label">Add New Category</div>
+      </div>
+
+    </div>
+
+    <!-- Table View (supplementary reference) -->
+    <div class="table-card">
+      <div class="tc-header">
+        <div><div class="tc-title">All Categories — Table View</div><div class="tc-sub">Drag rows to reorder menu display sequence</div></div>
+        <span style="font-size:13px;color:#aaa;">7 total</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th><div class="sort-bar">Category ↕</div></th>
+            <th>Description</th>
+            <th><div class="sort-bar">Products ↕</div></th>
+            <th><div class="sort-bar">Display Order ↕</div></th>
+            <th><div class="sort-bar">Status ↕</div></th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="drag-handle">⠿</span></td>
+            <td>
+              <div class="cat-cell">
+                <div class="cat-thumb" style="background:linear-gradient(135deg,#FFF5EE,#FFE4CC);">☕</div>
+                <div><div class="cat-cell-name">Hot Drinks</div><div class="cat-cell-id">CAT-001</div></div>
+              </div>
+            </td>
+            <td><div class="cat-cell-desc">Espresso, cappuccino, tea &amp; more</div></td>
+            <td><span style="font-weight:700;font-size:14px;">12</span></td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;background:#eee;border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;"></div></div>
+                <span style="font-size:12px;font-weight:700;color:var(--primary);">1st</span>
+              </div>
+            </td>
+            <td><span class="badge badge-active">● Visible</span></td>
+            <td><div class="action-group"><button class="act-btn act-edit">✏️ Edit</button><button class="act-btn act-hide">Hide</button><button class="act-btn act-del">🗑️</button></div></td>
+          </tr>
+          <tr>
+            <td><span class="drag-handle">⠿</span></td>
+            <td>
+              <div class="cat-cell">
+                <div class="cat-thumb" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);">🧃</div>
+                <div><div class="cat-cell-name">Cold Drinks</div><div class="cat-cell-id">CAT-002</div></div>
+              </div>
+            </td>
+            <td><div class="cat-cell-desc">Fresh juices, iced beverages</div></td>
+            <td><span style="font-weight:700;font-size:14px;">7</span></td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;background:#eee;border-radius:3px;overflow:hidden;"><div style="width:85%;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;"></div></div>
+                <span style="font-size:12px;font-weight:700;color:var(--primary);">2nd</span>
+              </div>
+            </td>
+            <td><span class="badge badge-active">● Visible</span></td>
+            <td><div class="action-group"><button class="act-btn act-edit">✏️ Edit</button><button class="act-btn act-hide">Hide</button><button class="act-btn act-del">🗑️</button></div></td>
+          </tr>
+          <tr>
+            <td><span class="drag-handle">⠿</span></td>
+            <td>
+              <div class="cat-cell">
+                <div class="cat-thumb" style="background:linear-gradient(135deg,#FFF8E1,#FFECB3);">🥪</div>
+                <div><div class="cat-cell-name">Sandwiches</div><div class="cat-cell-id">CAT-003</div></div>
+              </div>
+            </td>
+            <td><div class="cat-cell-desc">Club, falafel, wraps &amp; toasts</div></td>
+            <td><span style="font-weight:700;font-size:14px;">5</span></td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;background:#eee;border-radius:3px;overflow:hidden;"><div style="width:70%;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;"></div></div>
+                <span style="font-size:12px;font-weight:700;color:var(--primary);">3rd</span>
+              </div>
+            </td>
+            <td><span class="badge badge-active">● Visible</span></td>
+            <td><div class="action-group"><button class="act-btn act-edit">✏️ Edit</button><button class="act-btn act-hide">Hide</button><button class="act-btn act-del">🗑️</button></div></td>
+          </tr>
+          <tr>
+            <td><span class="drag-handle">⠿</span></td>
+            <td>
+              <div class="cat-cell">
+                <div class="cat-thumb" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);">🥗</div>
+                <div><div class="cat-cell-name">Salads</div><div class="cat-cell-id">CAT-004</div></div>
+              </div>
+            </td>
+            <td><div class="cat-cell-desc">Caesar, Greek, mixed greens</div></td>
+            <td><span style="font-weight:700;font-size:14px;">4</span></td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;background:#eee;border-radius:3px;overflow:hidden;"><div style="width:55%;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;"></div></div>
+                <span style="font-size:12px;font-weight:700;color:var(--primary);">4th</span>
+              </div>
+            </td>
+            <td><span class="badge badge-active">● Visible</span></td>
+            <td><div class="action-group"><button class="act-btn act-edit">✏️ Edit</button><button class="act-btn act-hide">Hide</button><button class="act-btn act-del">🗑️</button></div></td>
+          </tr>
+          <tr>
+            <td><span class="drag-handle">⠿</span></td>
+            <td>
+              <div class="cat-cell">
+                <div class="cat-thumb" style="background:linear-gradient(135deg,#FCE4EC,#F8BBD9);">🍰</div>
+                <div><div class="cat-cell-name">Desserts</div><div class="cat-cell-id">CAT-005</div></div>
+              </div>
+            </td>
+            <td><div class="cat-cell-desc">Cakes, donuts, pastries</div></td>
+            <td><span style="font-weight:700;font-size:14px;">6</span></td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;background:#eee;border-radius:3px;overflow:hidden;"><div style="width:40%;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;"></div></div>
+                <span style="font-size:12px;font-weight:700;color:var(--primary);">5th</span>
+              </div>
+            </td>
+            <td><span class="badge badge-active">● Visible</span></td>
+            <td><div class="action-group"><button class="act-btn act-edit">✏️ Edit</button><button class="act-btn act-hide">Hide</button><button class="act-btn act-del">🗑️</button></div></td>
+          </tr>
+          <tr style="opacity:.7;">
+            <td><span class="drag-handle">⠿</span></td>
+            <td>
+              <div class="cat-cell">
+                <div class="cat-thumb" style="background:#F5F5F5;">🥜</div>
+                <div><div class="cat-cell-name" style="color:#aaa;">Snacks</div><div class="cat-cell-id">CAT-006</div></div>
+              </div>
+            </td>
+            <td><div class="cat-cell-desc">Chips, nuts, crackers</div></td>
+            <td><span style="font-weight:700;font-size:14px;color:#aaa;">1</span></td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;background:#eee;border-radius:3px;overflow:hidden;"><div style="width:15%;height:100%;background:#ddd;border-radius:3px;"></div></div>
+                <span style="font-size:12px;font-weight:700;color:#aaa;">6th</span>
+              </div>
+            </td>
+            <td><span class="badge badge-hidden">● Hidden</span></td>
+            <td><div class="action-group"><button class="act-btn act-edit">✏️ Edit</button><button class="act-btn" style="background:rgba(40,167,69,.07);color:#28A745;border-color:rgba(40,167,69,.18);">Show</button><button class="act-btn act-del">🗑️</button></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination-row">
+        <span class="page-info">Showing all 7 categories</span>
+        <div style="font-size:12px;color:#aaa;">Drag rows to reorder menu display</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

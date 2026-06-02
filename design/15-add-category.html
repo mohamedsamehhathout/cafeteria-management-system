@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Category – CaféDesk Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6F4E37;--secondary:#D9A066;--bg:#F8F5F2;--sidebar:#2C1A0E;--border:#E8E0D8;--shadow:0 2px 20px rgba(111,78,55,.10);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-height:100vh;}
+
+/* ── Sidebar ── */
+.sidebar{width:240px;background:var(--sidebar);display:flex;flex-direction:column;flex-shrink:0;min-height:100vh;}
+.sidebar-logo{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.08);}
+.logo-name{font-size:19px;font-weight:800;color:#fff;}
+.logo-name span{color:var(--secondary);}
+.logo-sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase;}
+.nav-link{display:flex;align-items:center;gap:11px;padding:10px 20px;color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;font-weight:500;border-left:3px solid transparent;}
+.nav-link.active{color:var(--secondary);background:rgba(217,160,102,.12);border-left-color:var(--secondary);}
+.nav-section{font-size:10px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,.3);padding:12px 20px 4px;text-transform:uppercase;}
+.sidebar-user{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;margin-top:auto;}
+.s-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#D9A066,#B8824A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;}
+
+/* ── Main ── */
+.main{flex:1;display:flex;flex-direction:column;}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-left{display:flex;align-items:center;gap:16px;}
+.back-btn{padding:8px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:#666;cursor:pointer;}
+.topbar-title{font-size:20px;font-weight:800;color:#2C1A0E;}
+.page-body{padding:28px;}
+.breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:13px;color:#888;}
+.breadcrumb a{color:var(--primary);font-weight:600;text-decoration:none;}
+
+/* ── 2-col layout ── */
+.form-layout{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start;}
+
+/* ── Cards ── */
+.form-card{background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px;}
+.form-card:last-child{margin-bottom:0;}
+.fc-header{padding:20px 24px;border-bottom:1px solid var(--border);}
+.fc-header h3{font-size:15px;font-weight:700;color:#2C1A0E;}
+.fc-header p{font-size:12px;color:#aaa;margin-top:2px;}
+.fc-body{padding:24px;}
+
+/* ── Form elements ── */
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-size:12px;font-weight:700;color:#4A3020;margin-bottom:7px;text-transform:uppercase;letter-spacing:.4px;}
+.form-control{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:9px;font-family:'Poppins',sans-serif;font-size:13.5px;outline:none;transition:border-color .2s;background:#fafafa;color:#2C1A0E;}
+.form-control:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(111,78,55,.08);}
+.form-control::placeholder{color:#ccc;}
+.form-hint{font-size:11px;color:#aaa;margin-top:5px;}
+.char-count{font-size:11px;color:#bbb;text-align:right;margin-top:4px;}
+.char-count span{color:var(--primary);font-weight:700;}
+
+/* ── Icon / Color picker ── */
+.icon-section{margin-bottom:20px;}
+.icon-label{font-size:12px;font-weight:700;color:#4A3020;margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px;}
+.icon-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;}
+.icon-opt{width:100%;aspect-ratio:1;border-radius:10px;border:2px solid var(--border);background:#fafafa;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;}
+.icon-opt:hover{border-color:var(--secondary);background:rgba(217,160,102,.06);}
+.icon-opt.selected{border-color:var(--primary);background:rgba(111,78,55,.07);box-shadow:0 0 0 3px rgba(111,78,55,.1);}
+.icon-custom-input{margin-top:10px;display:flex;gap:8px;align-items:center;}
+.icon-custom-input input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;outline:none;background:#fafafa;}
+.icon-custom-input input:focus{border-color:var(--primary);}
+
+/* ── Background color picker ── */
+.color-section{margin-bottom:20px;}
+.color-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.color-swatch{width:36px;height:36px;border-radius:9px;cursor:pointer;border:3px solid transparent;transition:all .2s;flex-shrink:0;}
+.color-swatch:hover{transform:scale(1.1);}
+.color-swatch.selected{border-color:var(--primary);box-shadow:0 0 0 3px rgba(111,78,55,.2);}
+
+/* ── Display order ── */
+.order-input-wrap{display:flex;align-items:center;gap:12px;}
+.order-btn{width:36px;height:36px;border:2px solid var(--border);background:#fff;border-radius:8px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#444;font-family:'Poppins',sans-serif;font-weight:700;}
+.order-btn:hover{border-color:var(--primary);color:var(--primary);}
+.order-val{width:60px;text-align:center;padding:9px;border:2px solid var(--primary);border-radius:8px;font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--primary);background:#fff;outline:none;}
+
+/* ── Toggle ── */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg);border-radius:10px;border:1.5px solid var(--border);margin-bottom:14px;}
+.toggle-info .tl{font-size:13px;font-weight:700;color:#2C1A0E;}
+.toggle-info .ts{font-size:11.5px;color:#aaa;margin-top:2px;}
+.toggle-switch{width:46px;height:26px;border-radius:13px;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s;}
+.toggle-switch.on{background:var(--primary);}
+.toggle-switch.off{background:#ddd;}
+.toggle-switch::after{content:'';width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;top:3px;transition:left .2s;box-shadow:0 2px 4px rgba(0,0,0,.2);}
+.toggle-switch.on::after{left:23px;}
+.toggle-switch.off::after{left:3px;}
+
+/* ── Preview card ── */
+.preview-sticky{position:sticky;top:20px;}
+.preview-wrap{background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px;}
+.pv-header{padding:16px 20px;border-bottom:1px solid var(--border);}
+.pv-header h4{font-size:14px;font-weight:700;color:#2C1A0E;}
+.pv-body{padding:20px;}
+
+/* Preview card mockup */
+.preview-cat-card{border-radius:14px;overflow:hidden;border:1px solid var(--border);}
+.pcc-banner{height:110px;display:flex;align-items:center;justify-content:center;font-size:58px;position:relative;}
+.pcc-status{position:absolute;top:10px;right:10px;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:700;background:#D4EDDA;color:#155724;}
+.pcc-body{padding:14px 16px;background:#fff;}
+.pcc-name{font-size:15px;font-weight:800;color:#2C1A0E;margin-bottom:3px;}
+.pcc-desc{font-size:12px;color:#aaa;margin-bottom:10px;}
+.pcc-meta{display:flex;align-items:center;justify-content:space-between;}
+.pcc-pill{background:var(--bg);border-radius:20px;padding:4px 12px;font-size:11.5px;font-weight:700;color:var(--primary);}
+
+/* User-facing preview strip -->*/
+.menu-strip-preview{margin-top:16px;}
+.msp-label{font-size:11px;color:#aaa;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.msp-pills{display:flex;gap:7px;flex-wrap:wrap;}
+.msp-pill{padding:7px 16px;border-radius:50px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:#fff;color:#888;}
+.msp-pill.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.msp-note{font-size:11px;color:#bbb;margin-top:8px;font-style:italic;}
+
+/* ── Action card ── */
+.action-card{background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);}
+.action-card .fc-body{padding:20px;}
+.btn-save{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#8B6347);color:#fff;border:none;border-radius:9px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(111,78,55,.25);margin-bottom:10px;}
+.btn-draft{width:100%;padding:11px;background:#FFF8F0;color:var(--secondary);border:1.5px solid rgba(217,160,102,.4);border-radius:9px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;}
+.btn-cancel-a{width:100%;padding:11px;background:#fff;color:#888;border:1.5px solid var(--border);border-radius:9px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
+.tip-box{margin-top:14px;padding:12px 14px;background:#FFF8F0;border-radius:9px;border-left:3px solid var(--secondary);}
+.tip-box p{font-size:11.5px;color:#856404;font-weight:500;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-name">Café<span>Desk</span></div>
+    <div class="logo-sub">Admin Panel</div>
+  </div>
+  <nav style="padding:12px 0;flex:1;">
+    <div class="nav-section">Overview</div>
+    <a href="#" class="nav-link"><span>📊</span> Dashboard</a>
+    <div class="nav-section">Catalog</div>
+    <a href="#" class="nav-link"><span>🍽️</span> Products</a>
+    <a href="#" class="nav-link active"><span>📁</span> Categories</a>
+    <div class="nav-section">Orders</div>
+    <a href="#" class="nav-link"><span>⚡</span> Active Orders</a>
+    <a href="#" class="nav-link"><span>✍️</span> Manual Order</a>
+    <div class="nav-section">Users</div>
+    <a href="#" class="nav-link"><span>👥</span> Users</a>
+    <div class="nav-section">Finance</div>
+    <a href="#" class="nav-link"><span>💰</span> Reports</a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="s-avatar">AM</div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:#fff;">Ahmed Mostafa</div>
+      <div style="font-size:10px;color:rgba(255,255,255,.4);">Administrator</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn">← Back</button>
+      <div class="topbar-title">➕ Add Category</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#D9A066,#B8824A);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:14px;">AM</div>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="breadcrumb">
+      <a href="#">Categories</a>
+      <span>›</span>
+      <span>Add New Category</span>
+    </div>
+
+    <div class="form-layout">
+
+      <!-- Left column -->
+      <div>
+
+        <!-- Basic Info -->
+        <div class="form-card">
+          <div class="fc-header">
+            <h3>Category Details</h3>
+            <p>Name and describe this menu category</p>
+          </div>
+          <div class="fc-body">
+            <div class="form-group">
+              <label class="form-label">Category Name *</label>
+              <input class="form-control" type="text" placeholder="e.g. Hot Drinks" value="Hot Drinks">
+              <div class="char-count"><span>10</span> / 40 characters</div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" rows="3" placeholder="Short description shown under category name on the menu…">Freshly brewed espresso, cappuccino, teas &amp; seasonal specials</textarea>
+              <div class="char-count"><span>57</span> / 120 characters</div>
+              <div class="form-hint">Shown to users below the category name on the order page.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Icon picker -->
+        <div class="form-card">
+          <div class="fc-header">
+            <h3>Category Icon</h3>
+            <p>Choose an emoji icon to represent this category</p>
+          </div>
+          <div class="fc-body">
+            <div class="icon-label">Quick Pick</div>
+            <div class="icon-grid">
+              <div class="icon-opt selected">☕</div>
+              <div class="icon-opt">🍵</div>
+              <div class="icon-opt">🧋</div>
+              <div class="icon-opt">🥤</div>
+              <div class="icon-opt">🧃</div>
+              <div class="icon-opt">🥪</div>
+              <div class="icon-opt">🥗</div>
+              <div class="icon-opt">🍰</div>
+              <div class="icon-opt">🍩</div>
+              <div class="icon-opt">🍱</div>
+              <div class="icon-opt">🧆</div>
+              <div class="icon-opt">🥜</div>
+              <div class="icon-opt">🫖</div>
+              <div class="icon-opt">🥐</div>
+              <div class="icon-opt">🍫</div>
+              <div class="icon-opt">🥛</div>
+            </div>
+            <div class="icon-custom-input">
+              <input placeholder="Or type any emoji here…" value="☕">
+              <div style="font-size:28px;width:42px;height:42px;border-radius:8px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;">☕</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Background color -->
+        <div class="form-card">
+          <div class="fc-header">
+            <h3>Card Background</h3>
+            <p>Select the color palette for the category card banner</p>
+          </div>
+          <div class="fc-body">
+            <div class="color-grid">
+              <div class="color-swatch selected" style="background:linear-gradient(135deg,#FFF5EE,#FFE4CC);" title="Warm Orange"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);" title="Sky Blue"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);" title="Mint Green"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#FFF8E1,#FFECB3);" title="Lemon"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7);" title="Lavender"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#FCE4EC,#F8BBD9);" title="Rose"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#E0F2F1,#B2DFDB);" title="Teal"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#FBE9E7,#FFCCBC);" title="Coral"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#FFFDE7,#FFF9C4);" title="Pale Yellow"></div>
+              <div class="color-swatch" style="background:linear-gradient(135deg,#EDE7F6,#D1C4E9);" title="Indigo"></div>
+            </div>
+            <div class="form-hint" style="margin-top:10px;">This gradient appears in the card header visible on the categories list and order page.</div>
+          </div>
+        </div>
+
+        <!-- Display settings -->
+        <div class="form-card">
+          <div class="fc-header">
+            <h3>Display Settings</h3>
+            <p>Control visibility and ordering on the menu</p>
+          </div>
+          <div class="fc-body">
+            <div class="form-group">
+              <label class="form-label">Display Order</label>
+              <div class="order-input-wrap">
+                <button class="order-btn">−</button>
+                <input class="order-val" type="number" value="7" min="1">
+                <button class="order-btn">+</button>
+                <span style="font-size:12px;color:#aaa;margin-left:4px;">Categories are shown in ascending order on the menu</span>
+              </div>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div class="tl">Show on Menu</div>
+                <div class="ts">When ON, this category and its products appear to all users</div>
+              </div>
+              <div class="toggle-switch on"></div>
+            </div>
+            <div class="toggle-row" style="margin-bottom:0;">
+              <div class="toggle-info">
+                <div class="tl">Show Product Count</div>
+                <div class="ts">Display the number of available products under the category title</div>
+              </div>
+              <div class="toggle-switch on"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right column -->
+      <div class="preview-sticky">
+
+        <!-- Live Preview -->
+        <div class="preview-wrap">
+          <div class="pv-header"><h4>👁️ Live Preview</h4></div>
+          <div class="pv-body">
+            <div class="preview-cat-card">
+              <div class="pcc-banner" style="background:linear-gradient(135deg,#FFF5EE,#FFE4CC);">
+                ☕
+                <span class="pcc-status">● Visible</span>
+              </div>
+              <div class="pcc-body">
+                <div class="pcc-name">Hot Drinks</div>
+                <div class="pcc-desc">Freshly brewed espresso, cappuccino &amp; teas</div>
+                <div class="pcc-meta">
+                  <span class="pcc-pill">0 Products</span>
+                  <span style="font-size:11px;color:#aaa;">Sort: 7th</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab pill preview -->
+            <div class="menu-strip-preview">
+              <div class="msp-label">Category Tab Preview</div>
+              <div class="msp-pills">
+                <div class="msp-pill">All</div>
+                <div class="msp-pill active">☕ Hot Drinks</div>
+                <div class="msp-pill">🧃 Cold Drinks</div>
+                <div class="msp-pill">🥪 Sandwiches</div>
+              </div>
+              <div class="msp-note">This is how the tab appears in the employee order screen.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="action-card">
+          <div class="fc-body">
+            <button class="btn-save">✓ Save Category</button>
+            <button class="btn-draft">📄 Save as Draft</button>
+            <button class="btn-cancel-a">Cancel</button>
+            <div class="tip-box">
+              <p>💡 <strong>Tip:</strong> Categories with no products assigned will still be visible unless hidden. Add products after saving.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
