@@ -31,21 +31,28 @@
             <span class="nav-icon">📦</span>
             My Orders
         </a>
+        <div class="sidebar-bottom">
+            <div class="nav-section-label">
+                Account
+            </div>
 
-        <div class="nav-section-label">
-            Account
+            <a href="/profile">
+                <span class="nav-icon">👤</span>
+                Profile
+            </a>
+
+            <form method="POST" action="/logout">
+
+                <button type="submit" class="sidebar-link logout-link">
+
+                    <span class="nav-icon">🚪</span>
+
+                    Logout
+
+                </button>
+
+            </form>
         </div>
-
-        <a href="/profile">
-            <span class="nav-icon">👤</span>
-            Profile
-        </a>
-
-        <a href="/logout">
-            <span class="nav-icon">🚪</span>
-            Logout
-        </a>
-
     </nav>
 
     <div class="sidebar-user">

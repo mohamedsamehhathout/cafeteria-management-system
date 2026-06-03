@@ -64,6 +64,29 @@ echo "SIDEBAR WORKING";
             Users
         </a>
 
+        <div class="sidebar-bottom">
+            <div class="nav-section-label">
+                Account
+            </div>
+
+            <a href="/profile">
+                <span class="nav-icon">👤</span>
+                Profile
+            </a>
+
+            <form method="POST" action="/logout">
+
+                <button type="submit" class="sidebar-link logout-link">
+
+                    <span class="nav-icon">🚪</span>
+
+                    Logout
+
+                </button>
+
+            </form>
+        </div>
+
     </nav>
     <div class="sidebar-user">
 

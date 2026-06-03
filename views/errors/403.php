@@ -1,8 +1,19 @@
-<?php require __DIR__ . "/../" . "partials/head.php"; ?>
-<?php require __DIR__ . "/../" . "partials/navbar.php"; ?>
-<main>
-    <div class="text-white text-center text-3xl mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        Unauthorized
+<?php require base_path('views/partials/head.php'); ?>
+
+<div class="page-body">
+
+    <div class="card">
+
+        <div class="card-header">
+            <h2>403 Forbidden</h2>
+        </div>
+
+        <div class="card-body">
+            You do not have permission to access this page.
+        </div>
+
     </div>
-</main>
-<?php require __DIR__ . "/../" . "partials/footer.php"; ?>
+
+</div>
+
+<?php require base_path('views/partials/footer.php'); ?>
