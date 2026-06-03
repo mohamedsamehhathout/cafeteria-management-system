@@ -11,10 +11,16 @@ class Database
 
     public function __construct($config)
     {
-        $dsn = "mysql:" . http_build_query($config, '', ';');
-        $this->connection = new PDO(dsn: $dsn, options: [
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]);
+        $dsn = "mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']};charset={$config['charset']}";
+
+        $this->connection = new PDO(
+            $dsn,
+            $config['user'],
+            $config['password'],
+            [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]
+        );
     }
 
     public function query($query, $params = []) // to avoid sql injection
@@ -27,12 +33,7 @@ class Database
 
     public function get()
     {
-        // $results = $this->statement->fetchAll();
-        // if (empty($results)) {
-        //     abort();
-        // }else {
-        //     return $results;
-        // }
+       
         return $this->statement->fetchAll();
     }
 

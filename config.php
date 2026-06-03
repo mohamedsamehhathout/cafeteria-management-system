@@ -5,5 +5,6 @@ return [
     "dbname"  => "cafeteria",
     "port"    => 3306,
     "user"    => "root",
-    "charset" => "utf8mb4"
+    "charset" => "utf8mb4",
+    "password" => ""
 ];
