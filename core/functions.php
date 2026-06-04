@@ -52,3 +52,22 @@ function redirect($path)
     header("location: $path");
     exit();
 }
+
+function auth()
+{
+    if (! \Core\Auth::check()) {
+        redirect('/login');
+    }
+}
+function  adminOnly(){
+    auth();
+    if (! \Core\Auth::isAdmin()) {
+        abort(403);
+    }
+}
+function  userOnly(){
+    auth();
+    if (! \Core\Auth::isUser()) {
+        abort(403);
+    }
+}

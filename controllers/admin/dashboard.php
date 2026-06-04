@@ -3,13 +3,7 @@
 use Core\Auth;
 use Core\Database;
 
-if (! Auth::check()) {
-    redirect('/login');
-}
-
-if (!Auth::isAdmin()) {
-    abort(403);
-}
+adminOnly();
 
 $config = require base_path('config.php');
 

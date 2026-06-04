@@ -22,4 +22,8 @@ class Auth
     {
         return static::user()['role'] === 'admin';
     }
+    public static function isUser()
+    {
+        return static::user()['role'] === 'user';
+    }
 }

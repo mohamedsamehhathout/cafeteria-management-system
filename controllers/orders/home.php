@@ -1,9 +1,5 @@
 <?php
-use Core\Auth;
-
-if (! Auth::check()) {
-    redirect('/login');
-}
+userOnly();
 
 view('orders/home.view.php', [
     'pageTitle' => 'Home'

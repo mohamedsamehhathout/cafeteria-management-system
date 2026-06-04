@@ -3,9 +3,7 @@
 use Core\Auth;
 use Core\Database;
 
-if (! Auth::check()) {
-    redirect('/login');
-}
+auth();
 
 $config = require base_path('config.php');
 

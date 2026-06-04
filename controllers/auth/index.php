@@ -3,7 +3,7 @@ use Core\Auth;
 
 if (Auth::check()) {
 
-    if (Auth::user()['role'] === 'admin') {
+    if (Auth::isAdmin()) {
         redirect('/dashboard');
     }
 
