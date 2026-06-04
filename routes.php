@@ -14,4 +14,11 @@
 
     $router->get('/reset-password', 'controllers/auth/forgot/reset-index.php');
     $router->post('/reset-password', 'controllers/auth/forgot/reset-store.php');
-    $router->get('/profile', 'Controllers/profile/show.php');
+    $router->get('/profile', 'controllers/profile/show.php');
+
+    $router->get('/reports', 'controllers/reports/index.php');
+    $router->get('/products', 'controllers/products/index.php');
+    $router->get('/categories', 'controllers/categories/index.php');
+    $router->get('/orders', 'controllers/orders/show.php');
+    $router->get('/users', 'controllers/users/index.php');
+    $router->get('/my-orders', 'controllers/orders/user-orders.php');

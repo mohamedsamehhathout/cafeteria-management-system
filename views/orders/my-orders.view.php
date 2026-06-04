@@ -1,6 +1,6 @@
 <?php require base_path('views/partials/head.php'); ?>
 
-<?php require base_path('views/partials/sidebar-admin.php'); ?>
+<?php require base_path('views/partials/sidebar.php'); ?>
 
 <div class="main-content">
 
