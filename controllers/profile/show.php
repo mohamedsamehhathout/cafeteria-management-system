@@ -23,8 +23,7 @@ $user = $db
         ]
     )
     ->find();
-
 view('profile/show.view.php', [
     'pageTitle' => 'Profile',
-    'user' => $user
+    'profile' => $user
 ]);

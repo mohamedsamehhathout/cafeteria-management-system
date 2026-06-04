@@ -16,15 +16,15 @@
 
         <div class="card-body">
 
-            <h2><?= htmlspecialchars($user['name']) ?></h2>
+            <h2><?= htmlspecialchars($profile['name']) ?></h2>
+            <p>Email: <?= htmlspecialchars($profile['email']) ?></p>
 
-            <p>Email: <?= htmlspecialchars($user['email']) ?></p>
+            <p>Role: <?= ucfirst($profile['role']) ?></p>
+            
 
-            <p>Role: <?= ucfirst($user['role']) ?></p>
+            <p>Extension: <?= htmlspecialchars($profile['extension'] ?? '-') ?></p>
 
-            <p>Extension: <?= $user['extension'] ?? '-' ?></p>
-
-            <p>Room: <?= $user['room_number'] ?? '-' ?></p>
+            <p>Room: <?= htmlspecialchars($profile['room_number'] ?? '-') ?></p>
 
         </div>
 
