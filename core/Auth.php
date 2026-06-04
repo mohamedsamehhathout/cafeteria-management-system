@@ -18,4 +18,8 @@ class Auth
     {
         return ! static::check();
     }
+    public static function isAdmin()
+    {
+        return static::user()['role'] === 'admin';
+    }
 }

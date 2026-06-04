@@ -15,7 +15,10 @@ spl_autoload_register(function ($class) {
 });
 // require_once base_path("Core/router.php");
 Session::start();
-
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
 $router = new Router();
 
 require base_path("routes.php");

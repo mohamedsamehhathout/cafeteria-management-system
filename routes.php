@@ -14,3 +14,4 @@
 
     $router->get('/reset-password', 'controllers/auth/forgot/reset-index.php');
     $router->post('/reset-password', 'controllers/auth/forgot/reset-store.php');
+    $router->get('/profile', 'Controllers/profile/show.php');

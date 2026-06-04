@@ -75,7 +75,6 @@ CREATE TABLE orders (
     DEFAULT 'processing',
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    created_by INT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ON UPDATE CURRENT_TIMESTAMP,
 
@@ -111,22 +110,5 @@ CREATE TABLE order_items (
     CONSTRAINT fk_orderitem_product
     FOREIGN KEY (product_id)
     REFERENCES products(id)
-    ON DELETE CASCADE
-);
-
-CREATE TABLE password_resets (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-
-    user_id INT NOT NULL,
-
-    token VARCHAR(255) NOT NULL,
-
-    expires_at DATETIME NOT NULL,
-
-    used BOOLEAN DEFAULT FALSE,
-
-    CONSTRAINT fk_password_user
-    FOREIGN KEY (user_id)
-    REFERENCES users(id)
     ON DELETE CASCADE
 );

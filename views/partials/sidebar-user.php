@@ -1,3 +1,9 @@
+<?php
+
+use Core\Auth;
+
+$user = Auth::user();
+?>
 <aside class="sidebar">
 
     <div class="sidebar-logo">
@@ -58,16 +64,24 @@
     <div class="sidebar-user">
 
         <div class="avatar">
-            MH
+
+            <?=
+                strtoupper(
+                    substr($user['name'], 0, 1)
+                );
+            ?>
+
         </div>
 
         <div class="user-info">
             <div class="name">
-                Mohamed Sameh
+                <?= htmlspecialchars($user['name']) ?>
             </div>
 
             <div class="role">
-                Employee
+                <?= $user['role'] === 'admin'
+                ? 'Administrator'
+                : 'Employee'; ?>
             </div>
         </div>
 

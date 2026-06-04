@@ -1,7 +1,8 @@
 <?php
 
-echo "SIDEBAR WORKING";
+use Core\Auth;
 
+$user = Auth::user();
 ?>
 <aside class="sidebar">
     <div class="sidebar-logo">
@@ -22,7 +23,7 @@ echo "SIDEBAR WORKING";
             Overview
         </div>
 
-        <a href="/">
+        <a href="/dashboard">
             <span class="nav-icon">📊</span>
             Dashboard
         </a>
@@ -91,16 +92,24 @@ echo "SIDEBAR WORKING";
     <div class="sidebar-user">
 
         <div class="avatar">
-            AD
+
+            <?=
+                strtoupper(
+                    substr($user['name'], 0, 1)
+                );
+            ?>
+
         </div>
 
         <div class="user-info">
             <div class="name">
-                Admin User
+                <?= htmlspecialchars($user['name']) ?>
             </div>
 
             <div class="role">
-                Administrator
+                <?= $user['role'] === 'admin'
+                ? 'Administrator'
+                : 'Employee'; ?>
             </div>
         </div>
 
