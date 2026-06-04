@@ -922,3 +922,93 @@ html {
 
     margin-bottom: 20px;
 }
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 20px rgba(111,78,55,.08);
+}
+
+.stat-icon {
+    width: 55px;
+    height: 55px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(217,160,102,.15);
+
+    font-size: 26px;
+}
+
+.stat-label {
+    color: #999;
+    font-size: 13px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.recent-orders-card {
+    margin-top: 24px;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dashboard-table th {
+    text-align: left;
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.dashboard-table td {
+    padding: 14px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-processing {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-out_for_delivery {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-done {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
