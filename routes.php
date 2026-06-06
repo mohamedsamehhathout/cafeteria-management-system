@@ -11,13 +11,13 @@
     $router->delete('/categories', 'controllers/categories/delete.php');
 
     $router->get('/products', 'controllers/products/index.php');
-    // $router->get('/admin/categories/create', 'controllers/categories/create.php');
-    // $router->post('/categories', 'controllers/categories/store.php');
+    $router->get('/products/create', 'controllers/products/create.php');
+    $router->post('/products', 'controllers/products/store.php');
 
-    // $router->get('/admin/categories/edit', 'controllers/categories/edit.php');
-    // $router->patch('/categories', 'controllers/categories/update.php');
+    // $router->get('/admin/products/edit', 'controllers/products/edit.php');
+    // $router->patch('/products', 'controllers/products/update.php');
 
-    // $router->delete('/categories', 'controllers/categories/delete.php');
+    // $router->delete('/products', 'controllers/products/delete.php');
 
         
         
