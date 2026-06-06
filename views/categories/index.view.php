@@ -84,7 +84,7 @@ tbody tr:last-child td { border-bottom: none; }
                                 <div class="action-group">
                                     <a href="/admin/categories/edit?id=<?= $category['id'] ?>" class="act-btn act-edit">✏️ Edit</a>
                                     
-                                    <form action="/admin/categories" method="POST" style="margin: 0;" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                                    <form action="/categories" method="POST" style="margin: 0;" onsubmit="return confirm('Are you sure you want to delete this category?');">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="id" value="<?= $category['id'] ?>">
                                         <button type="submit" class="act-btn act-del">🗑️</button>
