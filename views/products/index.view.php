@@ -212,8 +212,7 @@
                             </td>
                             <td>
                                 <div class="action-group">
-                                    <a href="/products/edit?id=<?= $product['id'] ?>" class="act-btn act-edit">✏️ Edit</a>
-
+                                    <a href="/product/edit?id=<?= $product['id'] ?>" class="act-btn act-edit">✏️ Edit</a>
                                     <form action="/products" method="POST" style="margin: 0;" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="id" value="<?= $product['id'] ?>">

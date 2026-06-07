@@ -8,6 +8,10 @@ $db = new Database($config);
 
 $errors = [];
 
+$product = $db->query("SELECT * FROM products WHERE id = :id", [
+    'id' => $_POST['id'] ?? 0
+])->findOrFail();
+
 if (! Validator::string($_POST['name'], 1, 100)) {
     $errors['name'] = "A product name between 1 and 100 characters is required.";
 }
@@ -24,7 +28,7 @@ if (! $categoryExists) {
     $errors['category_id'] = "Please select a valid category.";
 }
 
-$imagePath = '/images/default-product.png'; 
+$imagePath = $product['image']; 
 
 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $fileTmpPath = $_FILES['image']['tmp_name'];
@@ -50,6 +54,11 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 
         if (move_uploaded_file($fileTmpPath, $destPath)) {
             $imagePath = '/uploads/' . $newFileName; 
+            
+            $oldFilePath = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'public' . str_replace('/', DIRECTORY_SEPARATOR, $product['image']);
+            if ($product['image'] !== '/images/default-product.png' && file_exists($oldFilePath)) {
+                @unlink($oldFilePath);
+            }
         } else {
             $errors['image'] = "There was an error moving the uploaded file.";
         }
@@ -58,9 +67,11 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 
 if (empty($errors)) {
     $db->query(
-        "INSERT INTO products (name, price, category_id, image) 
-         VALUES (:name, :price, :category_id, :image)", 
+        "UPDATE products 
+         SET name = :name, price = :price, category_id = :category_id, image = :image 
+         WHERE id = :id", 
         [
+            'id'          => $_POST['id'],
             'name'        => $_POST['name'],
             'price'       => $_POST['price'],
             'category_id' => $_POST['category_id'],
@@ -74,7 +85,8 @@ if (empty($errors)) {
 
 $categories = $db->query("SELECT id, name FROM categories")->get();
 
-view("products/create.view.php", [
+view("products/edit.view.php", [
     'errors'     => $errors,
+    'product'    => $product,
     'categories' => $categories 
 ]);
