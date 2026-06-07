@@ -17,7 +17,7 @@
     $router->get('/product/edit', 'controllers/products/edit.php');
     $router->patch('/product', 'controllers/products/update.php');
 
-    // $router->delete('/products', 'controllers/products/delete.php');
+    $router->delete('/products', 'controllers/products/delete.php');
 
         
         
