@@ -1,6 +1,7 @@
 <?php
 
 use Core\Auth;
+use Core\Router;
 
 $user = Auth::user();
 ?>
@@ -24,7 +25,7 @@ $user = Auth::user();
             Main
         </div>
 
-        <a href="/home" class="active">
+        <a href="/home" class="<?= urlIS("/home") ? "active" : "" ?>">
             <span class="nav-icon">🏠</span>
             Home
         </a>
@@ -33,7 +34,7 @@ $user = Auth::user();
             Orders
         </div>
 
-        <a href="/my-orders">
+        <a href="/my-orders" class="<?= urlIS("/my-orders") ? "active" : "" ?>">
             <span class="nav-icon">📦</span>
             My Orders
         </a>
@@ -42,7 +43,7 @@ $user = Auth::user();
                 Account
             </div>
 
-            <a href="/profile">
+            <a href="/profile" class="<?= urlIS("/profile") ? "active" : "" ?>">
                 <span class="nav-icon">👤</span>
                 Profile
             </a>

@@ -23,7 +23,7 @@ $user = Auth::user();
             Overview
         </div>
 
-        <a href="/dashboard">
+        <a href="/dashboard" class="<?= urlIS("/dashboard") ? "active" : "" ?>">
             <span class="nav-icon">📊</span>
             Dashboard
         </a>
@@ -32,12 +32,12 @@ $user = Auth::user();
             Catalog
         </div>
 
-        <a href="/products">
+        <a href="/products" class="<?= urlIS("/products") ? "active" : "" ?>">
             <span class="nav-icon">🍽️</span>
             Products
         </a>
 
-        <a href="/categories">
+        <a href="/categories" class="<?= urlIS("/categories") ? "active" : "" ?>">
             <span class="nav-icon">📁</span>
             Categories
         </a>
@@ -46,12 +46,12 @@ $user = Auth::user();
             Orders
         </div>
 
-        <a href="/orders">
+        <a href="/orders" class="<?= urlIS("/orders") ? "active" : "" ?>">
             <span class="nav-icon">⚡</span>
             Orders
         </a>
 
-        <a href="/reports">
+        <a href="/reports" class="<?= urlIS("/reports") ? "active" : "" ?>">
             <span class="nav-icon">📈</span>
             Reports
         </a>
@@ -60,7 +60,7 @@ $user = Auth::user();
             Users
         </div>
 
-        <a href="/users">
+        <a href="/users" class="<?= urlIS("/users") ? "active" : "" ?>">
             <span class="nav-icon">👥</span>
             Users
         </a>
@@ -70,7 +70,7 @@ $user = Auth::user();
                 Account
             </div>
 
-            <a href="/profile">
+            <a href="/profile" class="<?= urlIS("/profile") ? "active" : "" ?>">
                 <span class="nav-icon">👤</span>
                 Profile
             </a>
