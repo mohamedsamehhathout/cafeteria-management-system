@@ -1,5 +1,5 @@
 <?php require base_path('views/partials/head.php'); ?>
-<?php require base_path('views/partials/sidebar-admin.php'); ?>
+<?php require base_path('views/partials/sidebar-user.php'); ?>
 
 <div class="main">
 
@@ -9,7 +9,7 @@
 
         <!-- Filters -->
         <div class="filter-card">
-            <form method="GET" action="/orders">
+            <form method="GET" action="/my-orders">
                 <div class="filter-row">
 
                     <div class="filter-group">
@@ -44,7 +44,7 @@
                     </div>
 
                     <button type="submit" class="btn-filter">🔍 Search</button>
-                    <a href="/orders" class="btn-clear">Clear</a>
+                    <a href="/my-orders" class="btn-clear">Clear</a>
 
                 </div>
             </form>
@@ -54,21 +54,19 @@
         <div class="table-card">
 
             <div class="table-header">
-                <span class="table-title">All Orders</span>
-                <div style="display:flex; align-items:center; gap:12px;">
-                    <span class="orders-count"><?= count($orders) ?> orders</span>
-                    <a href="/manual-order" class="btn-filter">✍️ Manual Order</a>
-                </div>
+                <span class="table-title">Order History</span>
+                <span class="orders-count"><?= count($orders) ?> orders</span>
             </div>
 
             <?php if (empty($orders)): ?>
-                <div class="empty-state">No orders found.</div>
+                <div class="empty-state">
+                    No orders found.
+                </div>
             <?php else: ?>
                 <table>
                     <thead>
                         <tr>
                             <th>Order #</th>
-                            <th>Employee</th>
                             <th>Date & Time</th>
                             <th>Items</th>
                             <th>Room</th>
@@ -82,8 +80,6 @@
 
                             <tr>
                                 <td><span class="order-id">#<?= $order['id'] ?></span></td>
-
-                                <td><?= htmlspecialchars($order['user_name']) ?></td>
 
                                 <td>
                                     <div class="date-main"><?= date('M d, Y', strtotime($order['created_at'])) ?></div>
@@ -121,36 +117,24 @@
                                 </td>
 
                                 <td>
-                                    <div style="display:flex; gap:6px; align-items:center;">
-
+                                    <div style="display:flex; gap:6px;">
                                         <button class="expand-btn" onclick="toggleDetails(<?= $order['id'] ?>)">
                                             ▼ Details
                                         </button>
 
-                                        <?php if ($order['status'] !== 'done' && $order['status'] !== 'cancelled'): ?>
-                                            <form method="POST" action="/orders/update-status">
+                                        <?php if ($order['status'] === 'processing'): ?>
+                                            <form method="POST" action="/orders/cancel">
                                                 <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
-                                                <select
-                                                    name="status"
-                                                    class="filter-input"
-                                                    onchange="this.form.submit()"
-                                                    style="padding:5px 8px; font-size:12px;"
-                                                >
-                                                    <option value="processing"       <?= $order['status'] === 'processing'       ? 'selected' : '' ?>>Processing</option>
-                                                    <option value="out_for_delivery" <?= $order['status'] === 'out_for_delivery' ? 'selected' : '' ?>>Out for Delivery</option>
-                                                    <option value="done"             <?= $order['status'] === 'done'             ? 'selected' : '' ?>>Done</option>
-                                                    <option value="cancelled"        <?= $order['status'] === 'cancelled'        ? 'selected' : '' ?>>Cancelled</option>
-                                                </select>
+                                                <button type="submit" class="btn-cancel">✕ Cancel</button>
                                             </form>
                                         <?php endif; ?>
-
                                     </div>
                                 </td>
                             </tr>
 
                             <!-- Expanded Details Row -->
                             <tr id="details-<?= $order['id'] ?>" style="display:none;">
-                                <td colspan="8">
+                                <td colspan="7">
                                     <div class="expand-inner">
                                         <div class="expand-title">Order #<?= $order['id'] ?> — Item Details</div>
 

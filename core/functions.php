@@ -1,6 +1,14 @@
 <?php
 
 use Core\Response;
+use Core\Auth;
+use Core\Session;
+use Core\Database;
+use Core\DatabaseService;
+use Core\OrderService;
+use Core\InputValidator;
+
+Session::start();
 
 function dd($value)
 {
@@ -51,4 +59,39 @@ function redirect($path)
 {
     header("location: $path");
     exit();
+}
+
+function userOnly()
+{
+    if (!Auth::isAuthenticated()) {
+        redirect('/login');
+    }
+}
+
+function adminOnly()
+{
+    if (!Auth::isAdmin()) {
+        abort(Response::FORBIDDEN);
+    }
+}
+
+function getDatabase(): Database
+{
+    $config = require base_path('config.php');
+    return new Database($config);
+}
+
+function getDbService(): DatabaseService
+{
+    return new DatabaseService(getDatabase());
+}
+
+function getOrderService(): OrderService
+{
+    return new OrderService(getDbService());
+}
+
+function validator(): InputValidator
+{
+    return new InputValidator();
 }

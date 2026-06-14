@@ -17,7 +17,20 @@ $router = new Router();
 
 require base_path("routes.php");
 
-$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Handle both local development and production paths
+if (strpos($requestPath, '/cafeteria-management-system/public') === 0) {
+    $url = str_replace('/cafeteria-management-system/public', '', $requestPath);
+} else {
+    // For localhost development, just use the path directly
+    $url = $requestPath;
+}
+
+// Ensure URL starts with /
+if (empty($url)) {
+    $url = '/';
+}
 
 $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
 
