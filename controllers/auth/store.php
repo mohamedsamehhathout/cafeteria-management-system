@@ -1,48 +1,28 @@
 <?php
 
-use Core\Database;
-use Core\Session;
+use Core\Auth;
+use Core\InputValidator;
 
-$config = require base_path('config.php');
+$email = InputValidator::sanitizeEmail($_POST['email'] ?? '');
+$password = $_POST['password'] ?? '';
 
-$db = new Database($config);
+$validator = validator()
+    ->required('email', $email, 'Email')
+    ->email('email', $email)
+    ->required('password', $password, 'Password');
 
-$email = $_POST['email'];
-$password = $_POST['password'];
-
-$user = $db
-    ->query(
-        "SELECT * FROM users WHERE email = :email",
-        [
-            'email' => $email
-        ]
-    )
-    ->find();
-if (!$user) {
-
-    redirect('/login');
+if ($validator->fails()) {
+    redirect('/login?error=invalid_credentials');
 }
 
-if (!password_verify($password, $user['password'])) {
+$db = getDatabase();
 
-    redirect('/login');
+$user = $db->query("SELECT * FROM users WHERE email = :email", ['email' => $email])->find();
+
+if ($user && password_verify($password, $user['password'])) {
+    Auth::login($user);
+    redirect($user['role'] === 'admin' ? '/dashboard' : '/home');
 }
 
-Session::put('user', [
+redirect('/login?error=invalid_credentials');
 
-    'id' => $user['id'],
-
-    'name' => $user['name'],
-
-    'email' => $user['email'],
-
-    'role' => $user['role']
-
-]);
-
-if ($user['role'] === 'admin') {
-
-    redirect('/dashboard');
-}
-
-redirect('/home');

@@ -1,28 +1,27 @@
 <?php
 
-use Core\Database;
-use Core\Session;
+use Core\InputValidator;
 
-$config = require base_path('config.php');
+$email = InputValidator::sanitizeEmail($_POST['email'] ?? '');
 
-$db = new Database($config);
+$validator = validator()
+    ->required('email', $email, 'Email')
+    ->email('email', $email);
 
-$email = $_POST['email'];
-
-$user = $db
-    ->query(
-        "SELECT * FROM users WHERE email = :email",
-        [
-            'email' => $email
-        ]
-    )
-    ->find();
-
-if (! $user) {
-    
-    redirect('/forgot-password');
+if ($validator->fails()) {
+    redirect('/forgot-password?error=invalid_email');
 }
 
-Session::put('reset_email', $email);
+$dbService = getDbService();
+$user = $dbService->query(
+    "SELECT id FROM users WHERE email = :email",
+    ['email' => $email]
+);
 
-redirect('/reset-password');
+if (!empty($user)) {
+    // TODO: Send password reset email with token
+    redirect('/login?success=reset_link_sent');
+} else {
+    redirect('/forgot-password?error=email_not_found');
+}
+

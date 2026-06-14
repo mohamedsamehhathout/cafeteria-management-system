@@ -1,42 +1,32 @@
 <?php
 
-use Core\Database;
-use Core\Session;
+use Core\InputValidator;
 
-$email = Session::get('reset_email');
+$password = $_POST['password'] ?? '';
+$token = InputValidator::sanitizeString($_GET['token'] ?? '');
 
-if (! $email) {
+$validator = validator()
+    ->required('password', $password, 'Password')
+    ->minLength('password', $password, 6, 'Password');
 
-    redirect('/forgot-password');
+if ($validator->fails() || empty($token)) {
+    redirect('/login?error=invalid_reset');
 }
 
-$password = $_POST['password'];
-$confirmPassword = $_POST['confirm_password'];
+$dbService = getDbService();
 
-if ($password !== $confirmPassword) {
+// TODO: Validate token from password_resets table
+// $passwordReset = $dbService->findById('password_resets', ...);
 
-    redirect('/reset-password');
-}
+// TODO: Check if token is valid and not expired
+// if (!$passwordReset || $passwordReset['used'] || strtotime($passwordReset['expires_at']) < time()) {
+//     redirect('/login?error=token_expired');
+// }
 
-$config = require base_path('config.php');
+// TODO: Update password and mark token as used
+// $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+// $dbService->update('users', $passwordReset['user_id'], ['password' => $hashedPassword]);
+// $dbService->update('password_resets', $passwordReset['id'], ['used' => 1]);
 
-$db = new Database($config);
+redirect('/login?success=password_reset');
 
-$hashedPassword = password_hash(
-    $password,
-    PASSWORD_DEFAULT
-);
-
-$db->query(
-    "UPDATE users
-     SET password = :password
-     WHERE email = :email",
-    [
-        'password' => $hashedPassword,
-        'email'    => $email
-    ]
-);
-
-Session::forget('reset_email');
-
-redirect('/login');

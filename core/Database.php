@@ -3,6 +3,7 @@
 namespace Core;
 
 use PDO;
+use PDOException;
 
 class Database
 {
@@ -11,44 +12,75 @@ class Database
 
     public function __construct($config)
     {
-        $dsn = "mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']};charset={$config['charset']}";
-
-        $this->connection = new PDO(
-            $dsn,
-            $config['user'],
-            $config['password'],
-            [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ]
-        );
+        try {
+            $dsn = "mysql:" . http_build_query($config, '', ';');
+            $this->connection = new PDO(
+                $dsn,
+                options: [
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                ]
+            );
+        } catch (PDOException $e) {
+            error_log("Database connection failed: " . $e->getMessage());
+            throw new \Exception("Database connection failed. Please check your configuration.");
+        }
     }
 
-    public function query($query, $params = []) // to avoid sql injection
+    /**
+     * Execute query with parameters for prepared statements
+     */
+    public function query($query, $params = []): self
     {
-        $this->statement = $this->connection->prepare($query);
-        $this->statement->execute($params);
-        // return $statement;
+        try {
+            $this->statement = $this->connection->prepare($query);
+            $this->statement->execute($params);
+        } catch (PDOException $e) {
+            error_log("Query execution failed: " . $e->getMessage());
+            error_log("Query: " . $query);
+            throw new \Exception("Query execution failed: " . $e->getMessage());
+        }
+
         return $this;
     }
 
-    public function get()
+    /**
+     * Fetch all results
+     */
+    public function get(): array
     {
-       
-        return $this->statement->fetchAll();
+        return $this->statement->fetchAll() ?: [];
     }
 
-    public function find()
+    /**
+     * Fetch single result
+     */
+    public function find(): ?array
     {
-        return $this->statement->fetch();
+        $result = $this->statement->fetch();
+        return $result ?: null;
     }
 
-    public function findOrFail()
+    /**
+     * Fetch single result or throw exception
+     */
+    public function findOrFail(): array
     {
         $result = $this->find();
+
         if (!$result) {
-            abort();
-        } else {
-            return $result;
+            throw new \Exception("Record not found");
         }
+
+        return $result;
+    }
+
+    /**
+     * Get connection for direct access if needed
+     */
+    public function getConnection(): PDO
+    {
+        return $this->connection;
     }
 }
+

@@ -1,5 +1,6 @@
 <?php
+
 adminOnly();
-view('reports/index.view.php', [
-    'pageTitle' => 'Reports'
-]);
+
+view('reports/index.view.php');
+

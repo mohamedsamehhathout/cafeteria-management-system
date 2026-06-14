@@ -2,28 +2,33 @@
 
 namespace Core;
 
+use Core\Database;
+
 class Auth
 {
     public static function user()
     {
-        return Session::get('user');
+        return $_SESSION['user'] ?? null;
     }
 
-    public static function check()
+    public static function isAuthenticated()
     {
-        return static::user() !== null;
+        return isset($_SESSION['user']);
     }
 
-    public static function guest()
-    {
-        return ! static::check();
-    }
     public static function isAdmin()
     {
-        return static::user()['role'] === 'admin';
+        return self::isAuthenticated() && self::user()['role'] === 'admin';
     }
-    public static function isUser()
+
+    public static function login($user)
     {
-        return static::user()['role'] === 'user';
+        $_SESSION['user'] = $user;
+    }
+
+    public static function logout()
+    {
+        unset($_SESSION['user']);
+        session_destroy();
     }
 }

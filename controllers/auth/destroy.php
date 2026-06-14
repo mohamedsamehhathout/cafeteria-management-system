@@ -1,7 +1,4 @@
 <?php
 
-use Core\Session;
-
-Session::destroy();
-
+\Core\Auth::logout();
 redirect('/login');

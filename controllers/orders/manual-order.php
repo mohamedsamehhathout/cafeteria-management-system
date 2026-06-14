@@ -1,11 +1,8 @@
 <?php
 
-use Core\Auth;
-
-userOnly();
+adminOnly();
 
 $dbService = getDbService();
-$userId = Auth::user()['id'];
 
 $categories = $dbService->query("SELECT * FROM categories ORDER BY name ASC");
 
@@ -17,20 +14,18 @@ $products = $dbService->query(
      ORDER BY categories.name ASC, products.name ASC"
 );
 
-$latestOrder = $dbService->query(
-    "SELECT id, status, total_amount, created_at FROM orders
-     WHERE user_id = :user_id
-     ORDER BY created_at DESC
-     LIMIT 1",
-    ['user_id' => $userId]
+$users = $dbService->query(
+    "SELECT users.id, users.name, rooms.room_number
+     FROM users
+     LEFT JOIN rooms ON rooms.id = users.room_id
+     WHERE users.role = 'user'
+     ORDER BY users.name ASC"
 );
 
-$latestOrder = $latestOrder[0] ?? null;
-
-view('orders/home.view.php', [
-    'pageTitle' => 'Order Now',
+view('orders/manual.view.php', [
+    'pageTitle' => 'Manual Order',
     'categories' => $categories,
     'products' => $products,
-    'latestOrder' => $latestOrder
+    'users' => $users
 ]);
 
