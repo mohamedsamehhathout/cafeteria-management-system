@@ -8,7 +8,7 @@ $config = require base_path('config.php');
 
 $db = new Database($config);
 
-$users = $db
+$user = $db
     ->query("
         SELECT
             users.*,
@@ -16,14 +16,16 @@ $users = $db
         FROM users
         LEFT JOIN rooms
             ON rooms.id = users.room_id
-        ORDER BY users.created_at DESC
-    ")
-    ->get();
+        WHERE users.id = :id
+    ", [
+        'id' => $_GET['id']
+    ])
+    ->findOrFail();
 
-view('users/index.view.php', [
+view('users/show.php', [
 
-    'pageTitle' => 'Users Management',
+    'pageTitle' => 'User Details',
 
-    'users' => $users
+    'this_user' => $user
 
 ]);

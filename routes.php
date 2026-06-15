@@ -20,5 +20,17 @@
     $router->get('/products', 'controllers/products/index.php');
     $router->get('/categories', 'controllers/categories/index.php');
     $router->get('/orders', 'controllers/orders/show.php');
-    $router->get('/users', 'controllers/users/index.php');
+    
     $router->get('/my-orders', 'controllers/orders/user-orders.php');
+
+
+    $router->get('/users', 'controllers/users/index.php');
+    $router->get('/user', 'controllers/users/show.php');
+
+    $router->get('/users/create', 'controllers/users/create.php');
+    $router->post('/users', 'controllers/users/store.php');
+    
+    $router->delete('/users', 'controllers/users/destroy.php');
+
+    $router->get('/users/edit', 'controllers/users/edit.php');
+    $router->patch('/users', 'controllers/users/update.php');
