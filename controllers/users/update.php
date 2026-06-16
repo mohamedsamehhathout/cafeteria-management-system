@@ -115,6 +115,7 @@ $roomId = $_POST['room_id'];
 if ($_POST['room_id'] === 'new') {
 
     $roomNumber = trim($_POST['new_room']);
+    $roomDescription = trim($_POST['room_description']);
 
     $existingRoom = $db
         ->query(
@@ -137,11 +138,12 @@ if ($_POST['room_id'] === 'new') {
 
         $db->query(
             "
-            INSERT INTO rooms (room_number)
-            VALUES (:room_number)
+            INSERT INTO rooms (room_number, description)
+            VALUES (:room_number, :description)
             ",
             [
-                'room_number' => $roomNumber
+                'room_number' => $roomNumber,
+                'description' => $roomDescription
             ]
         );
 

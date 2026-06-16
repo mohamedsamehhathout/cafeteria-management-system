@@ -162,6 +162,12 @@ require base_path('views/partials/sidebar.php');
                         name="new_room"
                         class="form-control"
                         placeholder="Enter room number">
+                        <label class="form-label">Room Description</label>
+                        <input
+                            type="text"
+                            name="room_description"
+                            class="form-control"
+                            placeholder="Enter room description">
 
                 </div>
                 <div class="form-group">

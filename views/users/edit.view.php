@@ -280,6 +280,11 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-heig
                                         type="text"
                                         name="new_room"
                                         class="form-control">
+                                    <label class="form-label">Room Description</label>
+                                    <input
+                                        type="text"
+                                        name="room_description"
+                                        class="form-control">
 
                                 </div>
                             </div>
