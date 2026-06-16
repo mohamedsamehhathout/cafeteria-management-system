@@ -82,6 +82,11 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-heig
 
 .btn-save{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),#8B6347);color:#fff;border:none;border-radius:9px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(111,78,55,.25);margin-bottom:10px;}
 .btn-cancel{width:100%;padding:11px;background:#fff;color:#888;border:1.5px solid var(--border);border-radius:9px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
+.error {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+}
 </style>
 <div class="main">
 
@@ -192,7 +197,13 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-heig
                                     value="<?= htmlspecialchars($this_user['email']) ?>"
                                     required
                                 >
+                                <?php if (isset($errors['email'])) : ?>
 
+                                    <p class="error">
+                                        <?= $errors['email'] ?>
+                                    </p>
+
+                                <?php endif; ?>
                             </div>
 
                             <div class="form-row">
@@ -240,15 +251,37 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-heig
 
                                     </label>
 
-                                    <input
-                                        class="form-control"
-                                        type="number"
-                                        name="room_id"
-                                        value="<?= $this_user['room_id'] ?>"
-                                    >
+                                    <select name="room_id" class="form-control">
+
+                                        <?php foreach ($rooms as $room) : ?>
+
+                                            <option
+                                                value="<?= $room['id'] ?>"
+                                                <?= $room['id'] == $this_user['room_id']
+                                                    ? 'selected'
+                                                    : '' ?>>
+
+                                                <?= htmlspecialchars($room['room_number']) ?>
+
+                                            </option>
+
+                                        <?php endforeach; ?>
+                                        <option value="new">
+                                            + Add New Room
+                                        </option>
+                                    </select>
 
                                 </div>
+                                <div id="new-room-wrapper" style="display:none;">
 
+                                    <label class="form-label">New Room</label>
+
+                                    <input
+                                        type="text"
+                                        name="new_room"
+                                        class="form-control">
+
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -258,7 +291,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-heig
                                     Extension
 
                                 </label>
-
+                                
                                 <input
                                     class="form-control"
                                     type="text"
@@ -306,6 +339,13 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-heig
                                     name="password"
                                     placeholder="Leave blank to keep current password"
                                 >
+                                <?php if (isset($errors['password'])) : ?>
+
+                                    <p class="error">
+                                        <?= $errors['password'] ?>
+                                    </p>
+
+                                <?php endif; ?>
 
                             </div>
 
@@ -378,7 +418,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-heig
 
                                 <strong>Room:</strong>
 
-                                <?= $this_user['room_id'] ?>
+                                <?= $this_user['room_number'] ?>
 
                             </div>
 
@@ -433,5 +473,23 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);display:flex;min-heig
     </div>
 
 </div>
+<script>
+    const roomSelect = document.querySelector('[name="room_id"]');
 
+    const newRoomWrapper =
+        document.getElementById('new-room-wrapper');
+
+    roomSelect.addEventListener('change', function () {
+
+        if (this.value === 'new') {
+
+            newRoomWrapper.style.display = 'block';
+
+        } else {
+
+            newRoomWrapper.style.display = 'none';
+        }
+
+    });
+</script>
 <?php require base_path('views/partials/footer.php'); ?>

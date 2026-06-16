@@ -72,6 +72,7 @@ tbody tr:hover td{background:#faf8f6;}
 .page-content{display: flex;text-align: center;justify-content: center;align-items: center;flex-direction: column;}
 .page-btn{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:#666;}
 .page-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+.order{text-decoration: none; background:#FAFAF8;padding:12px 20px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#bbb;border-bottom:2px solid var(--border);}
 </style>
 <div class="main">
 
@@ -91,12 +92,47 @@ tbody tr:hover td{background:#faf8f6;}
 
                 <thead>
 
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Room</th>
-                        <th>Extension</th>
+                    <th>
+                        <a class="order" href="/users?sort=name&direction=<?= ($sort === 'name' && $direction === 'asc') ? 'desc' : 'asc' ?>">
+                            Name
+                            <?php if($sort == 'name'): ?>
+                            <?= $direction === 'asc' ? '↑' : '↓' ?>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+
+                        <th>
+                            <a class="order" href="/users?sort=email&direction=<?= ($sort === 'email' && $direction === 'asc') ? 'desc' : 'asc' ?>">
+                            Email
+                            <?php if($sort == 'email'): ?>
+                            <?= $direction === 'asc' ? '↑' : '↓' ?>
+                            <?php endif; ?>
+                        </a>
+                        </th>
+                        <th>
+                            <a class="order" href="/users?sort=role&direction=<?= ($sort === 'role' && $direction === 'asc') ? 'desc' : 'asc' ?>">
+                            Role
+                            <?php if($sort == 'role'): ?>
+                            <?= $direction === 'asc' ? '↑' : '↓' ?>
+                            <?php endif; ?>
+                        </a>
+                        </th>
+                        <th>
+                            <a class="order" href="/users?sort=room&direction=<?= ($sort === 'room' && $direction === 'asc') ? 'desc' : 'asc' ?>">
+                            Room
+                            <?php if($sort == 'room'): ?>
+                            <?= $direction === 'asc' ? '↑' : '↓' ?>
+                            <?php endif; ?>
+                        </a>
+                        </th>
+                        <th>
+                            <a class="order" href="/users?sort=extension&direction=<?= ($sort === 'extension' && $direction === 'asc') ? 'desc' : 'asc' ?>">
+                            Extension
+                            <?php if($sort == 'extension'): ?>
+                            <?= $direction === 'asc' ? '↑' : '↓' ?>
+                            <?php endif; ?>
+                        </a>
+                        </th>
                         <th>Actions</th>
                     </tr>
 

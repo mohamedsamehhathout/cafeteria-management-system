@@ -99,16 +99,31 @@ require base_path('views/partials/sidebar.php');
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" name="name" required>
+                
                 </div>
 
                 <div class="form-group">
                     <label>Email</label>
                     <input type="email" name="email" required>
+                    <?php if (isset($errors['email'])) : ?>
+
+                        <p class="error">
+                            <?= $errors['email'] ?>
+                        </p>
+
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" name="password" required>
+                    <?php if (isset($errors['password'])) : ?>
+
+                        <p class="error">
+                            <?= $errors['password'] ?>
+                        </p>
+
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
@@ -130,11 +145,25 @@ require base_path('views/partials/sidebar.php');
                                 <?= $room['room_number'] ?>
                             </option>
 
-                        <?php endforeach; ?>
+                            
 
+                        <?php endforeach; ?>
+                        <option value="new">
+                                + Add New Room
+                            </option>
                     </select>
                 </div>
+                <div id="new-room-wrapper" style="display:none;">
 
+                    <label class="form-label">New Room</label>
+
+                    <input
+                        type="text"
+                        name="new_room"
+                        class="form-control"
+                        placeholder="Enter room number">
+
+                </div>
                 <div class="form-group">
                     <label>Extension</label>
                     <input type="text" name="extension">
@@ -151,5 +180,23 @@ require base_path('views/partials/sidebar.php');
     </main>
 
 </div>
+<script>
+    const roomSelect = document.querySelector('[name="room_id"]');
 
+    const newRoomWrapper =
+        document.getElementById('new-room-wrapper');
+
+    roomSelect.addEventListener('change', function () {
+
+        if (this.value === 'new') {
+
+            newRoomWrapper.style.display = 'block';
+
+        } else {
+
+            newRoomWrapper.style.display = 'none';
+        }
+
+    });
+</script>
 <?php require base_path('views/partials/footer.php'); ?>
