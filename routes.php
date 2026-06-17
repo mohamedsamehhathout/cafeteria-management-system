@@ -36,13 +36,13 @@
     $router->patch('/users', 'controllers/users/update.php');
 
     $router->get('/categories', 'controllers/categories/index.php');
-    $router->get('/admin/categories/create', 'controllers/categories/create.php');
+    $router->get('/categories/create', 'controllers/categories/create.php');
     $router->post('/categories', 'controllers/categories/store.php');
 
-    $router->get('/admin/categories/edit', 'controllers/categories/edit.php');
+    $router->get('/categories/edit', 'controllers/categories/edit.php');
     $router->patch('/categories', 'controllers/categories/update.php');
 
-    $router->delete('/categories', 'controllers/categories/delete.php');
+    $router->delete('/categories', 'controllers/categories/destroy.php');
 
     $router->get('/products', 'controllers/products/index.php');
     $router->get('/products/create', 'controllers/products/create.php');
@@ -51,7 +51,7 @@
     $router->get('/product/edit', 'controllers/products/edit.php');
     $router->patch('/product', 'controllers/products/update.php');
 
-    $router->delete('/products', 'controllers/products/delete.php');
+    $router->delete('/products', 'controllers/products/destroy.php');
 
         
         

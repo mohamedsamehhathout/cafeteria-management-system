@@ -8,7 +8,8 @@ $category = $db->query("SELECT * FROM categories WHERE id = :id", [
     'id' => $_GET['id']
 ])->findOrFail(); 
 
+$css = '<link rel="stylesheet" href="/css/categories/edit.css">';
 view('categories/edit.view.php', [
     'category' => $category,
-    'errors' => []
+    'css' => $css
 ]);

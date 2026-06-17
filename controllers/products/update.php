@@ -45,7 +45,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     } else {
         $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
         
-        $uploadFileDir = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR;
+        $uploadFileDir = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR. 'products' . DIRECTORY_SEPARATOR;
         $destPath = $uploadFileDir . $newFileName;
 
         if (!is_dir($uploadFileDir)) {
@@ -53,7 +53,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         }
 
         if (move_uploaded_file($fileTmpPath, $destPath)) {
-            $imagePath = '/uploads/' . $newFileName; 
+            $imagePath = '/uploads/products/' . $newFileName; 
             
             $oldFilePath = dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'public' . str_replace('/', DIRECTORY_SEPARATOR, $product['image']);
             if ($product['image'] !== '/images/default-product.png' && file_exists($oldFilePath)) {
@@ -85,8 +85,10 @@ if (empty($errors)) {
 
 $categories = $db->query("SELECT id, name FROM categories")->get();
 
+$css = '<link rel="stylesheet" href="/css/products/edit.css">';
 view("products/edit.view.php", [
     'errors'     => $errors,
     'product'    => $product,
-    'categories' => $categories 
+    'categories' => $categories,
+    'css' => $css
 ]);

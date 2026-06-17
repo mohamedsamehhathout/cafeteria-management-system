@@ -5,11 +5,9 @@
 
     <?php require base_path('views/partials/navbar.php'); ?>
 
-    <main class="page-content">
+    <main class="page-body">
 
-        <h1 class="page-title">
-            Reports
-        </h1>
+        
 
         <div class="table-card">
 
