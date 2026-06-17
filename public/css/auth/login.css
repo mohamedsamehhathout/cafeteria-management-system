@@ -1,0 +1,239 @@
+/* =========================
+   LOGIN PAGE
+========================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    background: #f8f5f2;
+}
+
+.left-panel {
+    width: 52%;
+    background: linear-gradient(145deg, #2c1a0e 0%, #4a3020 40%, #6f4e37 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+    overflow: hidden;
+}
+
+.left-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px
+    );
+    background-size: 60px 60px;
+}
+
+.blob,
+.blob2 {
+    border-radius: 50%;
+    position: absolute;
+}
+
+.blob {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(
+        circle,
+        rgba(217, 160, 102, 0.18) 0%,
+        transparent 70%
+    );
+    top: -100px;
+    right: -100px;
+}
+
+.blob2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(
+        circle,
+        rgba(217, 160, 102, 0.1) 0%,
+        transparent 70%
+    );
+    bottom: -80px;
+    left: 40px;
+}
+
+.brand {
+    position: relative;
+    z-index: 2;
+}
+
+.brand-emoji {
+    font-size: 56px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.brand-name {
+    font-size: 40px;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.brand-name span {
+    color: var(--secondary);
+}
+
+.brand-tagline {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.features {
+    margin-top: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.feature-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(217, 160, 102, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.feature-item h4 {
+    color: white;
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.feature-item p {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+}
+
+.right-panel {
+    width: 48%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 64px;
+}
+
+.form-header {
+    margin-bottom: 36px;
+}
+
+.form-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #2c1a0e;
+    margin-bottom: 6px;
+}
+.form-header h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #2c1a0e;
+    margin-bottom: 6px;
+}
+.form-header p {
+    color: #888;
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a3020;
+}
+
+.input-wrap {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    background: #fafafa;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(111, 78, 55, 0.08);
+}
+
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    background: linear-gradient(135deg, var(--primary), #8b6347);
+    box-shadow: 0 4px 20px rgba(111, 78, 55, 0.35);
+}
+
+.btn-login:hover {
+    transform: translateY(-1px);
+}
+
+.login-error {
+    background: #ffe7e7;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.copyright {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: #ccc;
+}
+
+@media (max-width: 992px) {
+    .left-panel {
+        display: none;
+    }
+
+    .right-panel {
+        width: 100%;
+        padding: 40px;
+    }
+}

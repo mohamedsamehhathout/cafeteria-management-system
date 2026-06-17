@@ -50,7 +50,7 @@ $recentOrders = $db
         LIMIT 5
     ")
     ->get();
-
+$css = '<link rel="stylesheet" href="/css/admin/dashboard.css">';
 view('admin/dashboard.view.php', [
 
     'pageTitle' => 'Dashboard',
@@ -60,6 +60,7 @@ view('admin/dashboard.view.php', [
     'usersCount' => $usersCount,
     'ordersCount' => $ordersCount,
     'processingOrders' => $processingOrders,
-    'recentOrders' => $recentOrders
+    'recentOrders' => $recentOrders,
+    'css' => $css
 
 ]);

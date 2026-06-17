@@ -32,11 +32,13 @@ $user = $db
     )
     ->findOrFail();
 
+$css = '<link rel="stylesheet" href="/css/users/edit.css">';
 view('users/edit.view.php', [
 
     'pageTitle' => 'Edit User',
 
     'this_user' => $user,
-    'rooms' => $rooms
+    'rooms' => $rooms,
+    'css' => $css
 
 ]);

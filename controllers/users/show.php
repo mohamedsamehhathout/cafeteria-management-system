@@ -21,11 +21,12 @@ $user = $db
         'id' => $_GET['id']
     ])
     ->findOrFail();
-
+$css = '<link rel="stylesheet" href="/css/users/show.css">';
 view('users/show.php', [
 
     'pageTitle' => 'User Details',
 
-    'this_user' => $user
+    'this_user' => $user,
+    'css' => $css
 
 ]);

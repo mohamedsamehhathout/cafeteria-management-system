@@ -2,7 +2,7 @@
 <?php require base_path('views/partials/head.php'); ?>
 <?php require base_path('views/partials/sidebar.php'); ?>
 
-<div class="main-content">
+<div class="main">
 
 <?php require base_path('views/partials/navbar.php'); ?>
 

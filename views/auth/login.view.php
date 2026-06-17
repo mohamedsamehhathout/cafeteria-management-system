@@ -63,7 +63,7 @@
 
         <div class="form-header">
 
-            <h2>Welcome back 👋</h2>
+            <h2>Welcome back, </h2><h3>Dear customer</h3>
 
             <p>
                 Sign in to your CaféDesk account

@@ -40,13 +40,14 @@ $users = $db
     ")
     ->get();
 
-
+$css = '<link rel="stylesheet" href="/css/users/index.css">';
 view('users/index.view.php', [
 
     'pageTitle' => 'Users Management',
 
     'users' => $users,
     'direction' => $direction,
-    'sort' => $sort
+    'sort' => $sort,
+    'css' => $css
 
 ]);

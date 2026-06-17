@@ -5,8 +5,9 @@ use Core\Auth;
 $user = Auth::user();
 ?>
 <!-- views/partials/navbar.php -->
-<header class="topbar">
 
+<header class="topbar">
+    
     <div>
         <div class="topbar-title">
             <?= $pageTitle ?? 'Dashboard'; ?>
@@ -14,10 +15,13 @@ $user = Auth::user();
 
         <div class="topbar-sub">
             Welcome back,
-            <?= htmlspecialchars($user['name']) ?>
+            <?= htmlspecialchars($user['name'] ?? 'Guest') ?>
         </div>
+        
     </div>
 
-    
+    <button id="sidebar-toggle" class="sidebar-toggle">
+        ☰
+    </button>
 
 </header>
