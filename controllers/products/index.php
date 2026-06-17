@@ -14,6 +14,8 @@ $products = $db->query("
     LEFT JOIN categories ON products.category_id = categories.id
 ")->get();
 
+$css = '<link rel="stylesheet" href="/css/products/index.css">';
 view('products/index.view.php', [
-    'products' => $products
+    'products' => $products,
+    'css' => $css
 ]);

@@ -8,18 +8,17 @@ $db = new Database($config);
 
 $errors = [];
 
-// Validate the Category Name (Must be 1 to 50 characters)
+
 if (! Validator::string($_POST['name'], 1, 50)) {
     $errors['name'] = "A category name between 1 and 50 characters is required.";
 }
 
-// Validate the Description (Must be 1 to 255 characters)
 if (! Validator::string($_POST['description'], 1, 255)) {
     $errors['description'] = "A description is required and cannot exceed 255 characters.";
 }
 
 if (empty($errors)) {
-    // No errors! Save to the database securely.
+    
     $db->query("INSERT INTO categories (name, description) VALUES (:name, :description)", [
         'name' => $_POST['name'],
         'description' => $_POST['description']
@@ -29,6 +28,8 @@ if (empty($errors)) {
     exit();
 }
 
-view("categories/create.view.php", [
+$css = '<link rel="stylesheet" href="/css/categories/create.css">';
+view('categories/create.view.php', [
+    'css' => $css,
     'errors' => $errors
 ]);

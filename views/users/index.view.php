@@ -10,8 +10,18 @@ require base_path('views/partials/sidebar.php');
 
     <?php require base_path('views/partials/navbar.php'); ?>
 
-    <main class="page-content">
+    <main class="page-body">
+        <div class="page-header">
 
+            <h1 class="page-title">
+                 Manage Users
+            </h1>
+
+            <a href="/users/create" class="btn btn-primary">
+                + Add New User
+            </a>
+
+        </div>
 
         <div class="table-card">
 
@@ -135,9 +145,7 @@ require base_path('views/partials/sidebar.php');
             
 
         </div>
-        <a href="/users/create" class="btn-add">
-            Add User
-        </a>
+
 
     </main>
     
