@@ -71,13 +71,15 @@
 
         </div>
 
-        <?php if(isset($_GET['error'])) : ?>
+            <?php if (isset($errors['auth'])) : ?>
 
-            <div class="login-error">
-                Invalid email or password.
-            </div>
+                <div class="alert-error">
 
-        <?php endif; ?>
+                    <?= $errors['auth'] ?>
+
+                </div>
+
+            <?php endif; ?>
 
         <form method="POST" action="/login">
 
@@ -95,8 +97,8 @@
                         class="form-control"
                         type="email"
                         name="email"
-                        required
-                    >
+                        required>
+                    
 
                 </div>
 
@@ -122,7 +124,7 @@
                 </div>
 
             </div>
-
+            
             <button type="submit" class="btn-login">
                 Sign In →
             </button>

@@ -307,6 +307,93 @@ ALTER TABLE `users`
   ADD CONSTRAINT `fk_user_room` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE SET NULL;
 COMMIT;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO orders
+(user_id, room_id, notes, total_amount, status, created_at, updated_at)
+VALUES
+
+(3, 3, 'Extra cheese', 150.00, 'done',
+'2026-01-10 09:15:00',
+'2026-01-10 09:15:00'),
+
+(4, 4, 'No sugar', 80.00, 'processing',
+'2026-02-05 11:30:00',
+'2026-02-05 11:30:00'),
+
+(5, 5, 'Urgent delivery', 200.00, 'out_for_delivery',
+'2026-02-18 14:20:00',
+'2026-02-18 14:20:00'),
+
+(6, 2, 'Cold coffee', 65.00, 'done',
+'2026-03-03 10:45:00',
+'2026-03-03 10:45:00'),
+
+(3, 3, 'Large order', 320.00, 'done',
+'2026-03-25 13:00:00',
+'2026-03-25 13:00:00'),
+
+(4, 4, 'Extra spicy', 110.00, 'cancelled',
+'2026-04-08 16:10:00',
+'2026-04-08 16:10:00'),
+
+(5, 5, 'Office meeting order', 450.00, 'done',
+'2026-04-22 12:00:00',
+'2026-04-22 12:00:00'),
+
+(6, 2, 'Breakfast combo', 95.00, 'processing',
+'2026-05-07 08:30:00',
+'2026-05-07 08:30:00'),
+
+(3, 3, 'Family meal', 280.00, 'out_for_delivery',
+'2026-05-18 19:15:00',
+'2026-05-18 19:15:00'),
+
+(4, 4, 'Weekend order', 175.00, 'done',
+'2026-05-29 18:40:00',
+'2026-05-29 18:40:00');
+
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO products
+(name, price, category_id, image, is_available, created_at)
+VALUES
+
+('Mocha', 42.00, 1, 'mocha.jpg', 1,
+'2026-01-15 10:30:00'),
+
+('Americano', 30.00, 1, 'americano.jpg', 1,
+'2026-02-10 11:20:00'),
+
+('Green Tea', 22.00, 1, 'green-tea.jpg', 1,
+'2026-02-25 09:15:00'),
+
+('Mango Juice', 35.00, 2, 'mango-juice.jpg', 1,
+'2026-03-12 14:45:00'),
+
+('Strawberry Juice', 38.00, 2, 'strawberry-juice.jpg', 1,
+'2026-03-28 16:10:00'),
+
+('Blueberry Muffin', 28.00, 3, 'muffin.jpg', 1,
+'2026-04-05 08:50:00'),
+
+('Cheesecake', 55.00, 3, 'cheesecake.jpg', 1,
+'2026-04-22 13:30:00'),
+
+('Club Sandwich', 70.00, 9, 'club-sandwich.jpg', 1,
+'2026-05-02 12:00:00'),
+
+('Tuna Sandwich', 62.00, 9, 'tuna-sandwich.jpg', 1,
+'2026-05-15 15:25:00'),
+
+('Croissant', 25.00, 3, 'croissant.jpg', 1,
+'2026-05-29 09:40:00');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

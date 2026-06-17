@@ -18,12 +18,16 @@ $user = $db
         ]
     )
     ->find();
-if (!$user) {
 
-    redirect('/login');
-}
 
-if (!password_verify($password, $user['password'])) {
+$css = '<link rel="stylesheet" href="/css/auth/login.css">';
+
+
+if (! $user || ! password_verify($_POST['password'], $user['password'])) {
+
+    Session::put('errors', [
+        'auth' => 'Invalid email or password.'
+    ]);
 
     redirect('/login');
 }
