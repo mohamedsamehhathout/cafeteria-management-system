@@ -170,23 +170,18 @@ require base_path('views/partials/sidebar.php');
                     value="out_for_delivery">
 
                 <a
-                    href="/orders/edit?id=<?= $order['id'] ?>"
-                    class="act-btn act-edit" style="text-decoration: none; margin-right: 15px;background-color: #6f4e37;">
+                    href="/orders/user/edit?id=<?= $order['id'] ?>"
+                    class="act-btn act-edit" style="text-decoration: none; display: block; background-color: #6f4e37;">
 
                     Edit Order
 
                 </a>
 
-                <button
-                    class="act-btn act-edit" style="background-color: #6f4e37;">
-
-                    Send To Delivery
-
-                </button>
+                
 
             </form>
 
-            <form action="/orders/status" method="POST">
+            <form action="/orders/user/status" method="POST">
 
                 <input
                     type="hidden"
@@ -199,38 +194,9 @@ require base_path('views/partials/sidebar.php');
                     value="cancelled">
 
                 <button
-                    class="act-btn act-del">
+                    class="act-btn act-del" style="padding: 12px;">
 
                     Cancel Order
-
-                </button>
-
-            </form>
-
-        </div>
-
-    <?php endif; ?>
-
-    <?php if ($order['status'] === 'out_for_delivery') : ?>
-
-        <div class="order-actions">
-
-            <form action="/orders/status" method="POST">
-
-                <input
-                    type="hidden"
-                    name="order_id"
-                    value="<?= $order['id'] ?>">
-
-                <input
-                    type="hidden"
-                    name="status"
-                    value="done">
-
-                <button
-                    class="act-btn btn-submit">
-
-                    ✅ Mark As Done
 
                 </button>
 

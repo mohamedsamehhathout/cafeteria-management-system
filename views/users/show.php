@@ -93,7 +93,7 @@ require base_path('views/partials/sidebar.php');
 
             <a
                 href="/users/edit?id=<?= $this_user['id'] ?>"
-                class="btn-edit"
+                class="btn-edit" style="color: white;"
             >
                 Edit User
             </a>

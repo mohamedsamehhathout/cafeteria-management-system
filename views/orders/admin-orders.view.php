@@ -68,7 +68,7 @@ require base_path('views/partials/sidebar.php');
                 <div class="lane-header">
 
                     <span class="lane-title">
-                        ⏳ Processing
+                        Processing
                     </span>
 
                     <span class="lane-count">
@@ -100,11 +100,11 @@ require base_path('views/partials/sidebar.php');
                             </div>
 
                             <p>
-                                👤 <?= htmlspecialchars($order['user_name']) ?>
+                                <?= htmlspecialchars($order['user_name']) ?>
                             </p>
 
                             <p>
-                                🏢 Room <?= htmlspecialchars($order['room_number'] ?? '-') ?>
+                                Room <?= htmlspecialchars($order['room_number'] ?? '-') ?>
                             </p>
                             <div class="order-items">
 
@@ -128,7 +128,7 @@ require base_path('views/partials/sidebar.php');
                             </a>
 
                             <p>
-                                💰 <?= number_format($order['total_amount'], 2) ?> EGP
+                                <?= number_format($order['total_amount'], 2) ?> EGP
                             </p>
 
                             <div class="order-actions">
@@ -149,7 +149,7 @@ require base_path('views/partials/sidebar.php');
                                         type="submit"
                                         class="btn btn-primary">
 
-                                        🚚 Send
+                                        Send
 
                                     </button>
                                     
@@ -173,7 +173,7 @@ require base_path('views/partials/sidebar.php');
                 <div class="lane-header">
 
                     <span class="lane-title">
-                        🚚 Out For Delivery
+                        Out For Delivery
                     </span>
 
                     <span class="lane-count">
@@ -201,15 +201,15 @@ require base_path('views/partials/sidebar.php');
                             </div>
 
                             <p>
-                                👤 <?= htmlspecialchars($order['user_name']) ?>
+                                <?= htmlspecialchars($order['user_name']) ?>
                             </p>
 
                             <p>
-                                🏢 Room <?= htmlspecialchars($order['room_number'] ?? '-') ?>
+                                Room <?= htmlspecialchars($order['room_number'] ?? '-') ?>
                             </p>
 
                             <p>
-                                💰 <?= number_format($order['total_amount'], 2) ?> EGP
+                                <?= number_format($order['total_amount'], 2) ?> EGP
                             </p>
 
                             <div class="order-actions">
@@ -230,7 +230,7 @@ require base_path('views/partials/sidebar.php');
                                         type="submit"
                                         class="btn btn-success">
 
-                                        ✅ Done
+                                        Done
 
                                     </button>
 
@@ -253,7 +253,7 @@ require base_path('views/partials/sidebar.php');
                 <div class="lane-header">
 
                     <span class="lane-title">
-                        ✅ Completed
+                        Completed
                     </span>
 
                     <span class="lane-count">
@@ -281,15 +281,15 @@ require base_path('views/partials/sidebar.php');
                             </div>
 
                             <p>
-                                👤 <?= htmlspecialchars($order['user_name']) ?>
+                                <?= htmlspecialchars($order['user_name']) ?>
                             </p>
 
                             <p>
-                                🏢 Room <?= htmlspecialchars($order['room_number'] ?? '-') ?>
+                                Room <?= htmlspecialchars($order['room_number'] ?? '-') ?>
                             </p>
 
                             <p>
-                                💰 <?= number_format($order['total_amount'], 2) ?> EGP
+                                <?= number_format($order['total_amount'], 2) ?> EGP
                             </p>
 
                         </div>

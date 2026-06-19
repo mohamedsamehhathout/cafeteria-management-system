@@ -8,7 +8,7 @@ $user = Auth::user();
 <aside class="sidebar">
 
     <div class="sidebar-logo">
-        <span class="logo-icon">☕</span>
+        
 
         <div class="logo-name">
             CaféDesk
@@ -26,7 +26,7 @@ $user = Auth::user();
         </div>
 
         <a href="/home" class="<?= urlIS("/home") ? "active" : "" ?>">
-            <span class="nav-icon">🏠</span>
+            
             Home
         </a>
 
@@ -35,7 +35,7 @@ $user = Auth::user();
         </div>
 
         <a href="/my-orders" class="<?= urlIS("/my-orders") ? "active" : "" ?>">
-            <span class="nav-icon">📦</span>
+            
             My Orders
         </a>
         <div class="sidebar-bottom">
@@ -44,7 +44,7 @@ $user = Auth::user();
             </div>
 
             <a href="/profile" class="<?= urlIS("/profile") ? "active" : "" ?>">
-                <span class="nav-icon">👤</span>
+                
                 Profile
             </a>
 
@@ -52,7 +52,7 @@ $user = Auth::user();
 
                 <button type="submit" class="sidebar-link logout-link">
 
-                    <span class="nav-icon">🚪</span>
+                    
 
                     Logout
 

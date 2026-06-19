@@ -18,7 +18,7 @@ require base_path('views/partials/sidebar.php');
             </h1>
 
             <a href="/users/create" class="btn btn-primary">
-                + Add New User
+                Add New User
             </a>
 
         </div>
@@ -134,14 +134,14 @@ require base_path('views/partials/sidebar.php');
 
                             <a
                                 href="/user?id=<?= $this_user['id'] ?>"
-                                class="btn-view"
+                                class="btn-view" style="background-color: #a57451; color: white;"
                             >
                                 View
                             </a>
 
                             <a
                                 href="/users/edit?id=<?= $this_user['id'] ?>"
-                                class="btn-edit"
+                                class="btn-edit" style="color: white;"
                             >
                                 Edit
                             </a>

@@ -336,7 +336,7 @@ require base_path('views/partials/sidebar.php');
 
                         <div class="pp-tags">
 
-                            <span class="pp-tag tag-employee">
+                            <span class="pp-tag tag-employee" style="background-color: #6f4e37; color: white;" >
 
                                 <?= ucfirst($this_user['role']) ?>
 

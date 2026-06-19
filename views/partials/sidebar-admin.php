@@ -6,7 +6,7 @@ $user = Auth::user();
 ?>
 <aside class="sidebar">
     <div class="sidebar-logo">
-        <span class="logo-icon">☕</span>
+        
 
         <div class="logo-name">
             CaféDesk
@@ -24,7 +24,7 @@ $user = Auth::user();
         </div>
 
         <a href="/dashboard" class="<?= urlIS("/dashboard") ? "active" : "" ?>">
-            <span class="nav-icon">📊</span>
+            
             Dashboard
         </a>
 
@@ -33,12 +33,12 @@ $user = Auth::user();
         </div>
 
         <a href="/products" class="<?= urlIS("/products") ? "active" : "" ?>">
-            <span class="nav-icon">🍽️</span>
+            
             Products
         </a>
 
         <a href="/categories" class="<?= urlIS("/categories") ? "active" : "" ?>">
-            <span class="nav-icon">📁</span>
+            
             Categories
         </a>
 
@@ -47,12 +47,18 @@ $user = Auth::user();
         </div>
 
         <a href="/orders" class="<?= urlIS("/orders") ? "active" : "" ?>">
-            <span class="nav-icon">⚡</span>
-            Orders
+            
+            Active Orders
         </a>
-
+        <a href="/orders/create" class="<?= urlIS("/orders/create") ? "active" : "" ?>">
+            
+            Manual Orders
+        </a>
+        <div class="nav-section-label">
+            Checks
+        </div>
         <a href="/reports" class="<?= urlIS("/reports") ? "active" : "" ?>">
-            <span class="nav-icon">📈</span>
+            
             Reports
         </a>
 
@@ -61,7 +67,7 @@ $user = Auth::user();
         </div>
 
         <a href="/users" class="<?= urlIS("/users") ? "active" : "" ?>">
-            <span class="nav-icon">👥</span>
+            
             Users
         </a>
 
@@ -71,7 +77,7 @@ $user = Auth::user();
             </div>
 
             <a href="/profile" class="<?= urlIS("/profile") ? "active" : "" ?>">
-                <span class="nav-icon">👤</span>
+                
                 Profile
             </a>
 
@@ -79,7 +85,7 @@ $user = Auth::user();
 
                 <button type="submit" class="sidebar-link logout-link">
 
-                    <span class="nav-icon">🚪</span>
+                    
 
                     Logout
 

@@ -41,7 +41,7 @@
 
                         <div class="pp-tags">
 
-                            <span class="pp-tag tag-employee">
+                            <span class="pp-tag tag-employee" style="background-color: #6f4e37; color: white;">
 
                                 <?= ucfirst($profile['role']) ?>
 

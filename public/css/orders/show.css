@@ -262,7 +262,19 @@
     opacity: .9;
 
 }
+.btn-cancel {
 
+    background: #6c757d;
+
+    color: #fff;
+
+}
+
+.btn-cancel:hover {
+
+    background: #5a6268;
+
+}
 /* Mark Done */
 
 .order-actions .btn-submit {

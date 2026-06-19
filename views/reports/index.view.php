@@ -47,7 +47,7 @@
 
                         <button
                             type="submit"
-                            class="btn btn-primary">
+                            class="btn btn-primary" style="background-color: #6f4e37;">
 
                             Generate Report
 

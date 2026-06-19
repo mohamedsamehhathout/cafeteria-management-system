@@ -21,7 +21,7 @@ require base_path('views/partials/sidebar.php');
 
         </div>
         <form
-            action="/orders"
+            action="/my-orders"
             method="POST">
 
             <input
@@ -127,7 +127,7 @@ require base_path('views/partials/sidebar.php');
 
                 <div class="add-product-card">
 
-                    <h3 class="section-title" >
+                    <h3 class="section-title">
 
                         Add Product
 
@@ -194,7 +194,7 @@ require base_path('views/partials/sidebar.php');
                     </button>
 
                     <a
-                        href="/orders/show?id=<?= $order['id'] ?>"
+                        href="/orders/user/show?id=<?= $order['id'] ?>"
                         class="act-btn btn-cancel">
 
                         Cancel

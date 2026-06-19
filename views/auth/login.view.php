@@ -8,7 +8,7 @@
 
         <div class="brand">
 
-            <span class="brand-emoji">☕</span>
+            
 
             <h1 class="brand-name">
                 Café<span>Desk</span>
@@ -24,7 +24,7 @@
 
             <div class="feature-item">
 
-                <div class="feature-icon">🛒</div>
+                
 
                 <div>
                     <h4>Order From Your Desk</h4>
@@ -35,7 +35,7 @@
 
             <div class="feature-item">
 
-                <div class="feature-icon">📍</div>
+                
 
                 <div>
                     <h4>Track Orders</h4>
@@ -46,7 +46,7 @@
 
             <div class="feature-item">
 
-                <div class="feature-icon">📊</div>
+                
 
                 <div>
                     <h4>Admin Dashboard</h4>
@@ -91,7 +91,7 @@
 
                 <div class="input-wrap">
 
-                    <span class="input-icon">✉️</span>
+                    
 
                     <input
                         class="form-control"
@@ -112,7 +112,6 @@
 
                 <div class="input-wrap">
 
-                    <span class="input-icon">🔒</span>
 
                     <input
                         class="form-control"
