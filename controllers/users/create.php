@@ -15,11 +15,12 @@ $rooms = $db
         ORDER BY room_number
     ")
     ->get();
-
+$css = '<link rel="stylesheet" href="/css/users/create.css">';
 view('users/create.view.php', [
 
     'pageTitle' => 'Add User',
 
-    'rooms' => $rooms
+    'rooms' => $rooms,
+    'css' => $css
 
 ]);

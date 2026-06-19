@@ -1,0 +1,556 @@
+
+
+.order-details-card {
+
+    background: #fff;
+
+    border-radius: 14px;
+
+    padding: 24px;
+
+    border: 1px solid #e8e0d8;
+
+    box-shadow: 0 2px 12px rgba(0,0,0,.05);
+
+}
+
+.order-info {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+
+}
+
+.info-box {
+
+    background: #f8f5f2;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    border: 1px solid #e8e0d8;
+
+}
+
+.info-label {
+
+    font-size: 12px;
+
+    color: #888;
+
+    margin-bottom: 4px;
+
+}
+
+.info-value {
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: var(--primary);
+
+}
+
+.order-notes {
+
+    margin-bottom: 24px;
+
+    padding: 14px;
+
+    background: #f8f5f2;
+
+    border-radius: 10px;
+
+    border: 1px solid #e8e0d8;
+
+}
+
+.order-notes h4 {
+
+    margin-bottom: 10px;
+
+    color: var(--primary);
+
+}
+
+
+
+.order-items-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 20px;
+
+}
+
+.order-items-table th {
+
+    background: #f8f5f2;
+
+    color: var(--primary);
+
+    padding: 12px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e8e0d8;
+
+}
+
+.order-items-table td {
+
+    padding: 12px;
+
+    border-bottom: 1px solid #f1ece7;
+
+}
+
+.order-items-table tr:hover {
+
+    background: #fafafa;
+
+}
+
+
+
+.order-total {
+
+    margin-top: 24px;
+
+    text-align: right;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: var(--primary);
+
+}
+
+
+
+.status-pill {
+
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+.status-processing {
+
+    background: #fff3cd;
+
+    color: #856404;
+
+}
+
+.status-delivery {
+
+    background: #d1ecf1;
+
+    color: #0c5460;
+
+}
+
+.status-done {
+
+    background: #d4edda;
+
+    color: #155724;
+
+}
+
+.status-cancelled {
+
+    background: #f8d7da;
+
+    color: #721c24;
+
+}
+
+
+
+.order-actions {
+
+    margin-top: 24px;
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+.order-actions form {
+
+    margin: 0;
+
+}
+
+
+/* =========================
+   Action Buttons
+========================= */
+
+.order-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 24px;
+
+}
+
+.order-actions form {
+
+    margin: 0;
+
+}
+
+.order-actions button {
+
+    border: none;
+
+    cursor: pointer;
+
+}
+
+/* Send To Delivery */
+
+.order-actions .act-edit {
+
+    background: var(--secondary);
+
+    color: white;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: .2s;
+
+}
+
+.act-edit a{
+    text-decoration: none;
+}
+
+.order-actions .act-edit:hover {
+
+    transform: translateY(-2px);
+
+    opacity: .9;
+
+}
+
+/* Mark Done */
+
+.order-actions .btn-submit {
+
+    background: #28a745;
+
+    color: white;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: .2s;
+
+}
+
+.order-actions .btn-submit:hover {
+
+    background: #218838;
+
+    transform: translateY(-2px);
+
+}
+
+/* Cancel */
+
+.order-actions .act-del {
+
+    background: #dc3545;
+
+    color: white;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: .2s;
+
+}
+
+.order-actions .act-del:hover {
+
+    background: #c82333;
+
+    transform: translateY(-2px);
+
+}
+@media (max-width: 768px) {
+
+    .order-info {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .order-actions {
+
+        flex-direction: column;
+
+    }
+
+}
+
+.section-title {
+
+    margin-bottom: 15px;
+
+    color: var(--primary);
+
+}
+
+.items-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-bottom: 24px;
+
+}
+
+.item-card {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 14px;
+
+    background: #f8f5f2;
+
+    border: 1px solid #e8e0d8;
+
+    border-radius: 10px;
+
+}
+
+.item-name {
+
+    font-weight: 600;
+
+    color: var(--primary);
+
+}
+
+.item-price {
+
+    font-size: 13px;
+
+    color: #888;
+
+    margin-top: 4px;
+
+}
+
+.item-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+.qty-input {
+
+    width: 80px;
+
+    padding: 8px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    text-align: center;
+
+}
+
+.add-product-card {
+
+    margin-top: 24px;
+
+    padding: 18px;
+
+    background: #f8f5f2;
+
+    border-radius: 10px;
+
+    border: 1px solid #e8e0d8;
+
+}
+
+.add-product-row {
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+}
+
+.add-product-row .form-control {
+
+    flex: 1;
+
+}
+/* =========================
+   Common Buttons
+========================= */
+
+.act-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+
+}
+
+.act-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
+
+}
+
+/* =========================
+   Edit
+========================= */
+
+.act-edit {
+
+    background: #c58b4e;
+
+    color: #fff;
+
+}
+
+.act-edit:hover {
+
+    background: #b57b3d;
+
+}
+
+/* =========================
+   Save / Submit
+========================= */
+
+.btn-submit {
+
+    background: #28a745;
+
+    color: #fff;
+
+}
+
+.btn-submit:hover {
+
+    background: #218838;
+
+}
+
+/* =========================
+   Delete
+========================= */
+
+.act-del {
+
+    background: #dc3545;
+
+    color: #fff;
+
+}
+
+.act-del:hover {
+
+    background: #c82333;
+
+}
+
+/* =========================
+   Cancel
+========================= */
+
+.btn-cancel {
+
+    background: #6c757d;
+
+    color: #fff;
+
+}
+
+.btn-cancel:hover {
+
+    background: #5a6268;
+
+}

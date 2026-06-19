@@ -15,9 +15,9 @@ require base_path('views/partials/sidebar.php');
 
         <div class="page-header">
 
-            <h1 class="page-title">
+            <h2>
                 Add New Category
-            </h1>
+            </h2>
 
         </div>
 
@@ -27,9 +27,7 @@ require base_path('views/partials/sidebar.php');
 
                 <div class="form-group">
 
-                    <label
-                        for="name"
-                        class="form-label">
+                    <label>
 
                         Category Name
 
@@ -38,15 +36,13 @@ require base_path('views/partials/sidebar.php');
                     <input
                         type="text"
                         id="name"
-                        name="name"
-                        class="form-control"
-                        value="<?= htmlspecialchars($_POST['name'] ?? '', ENT_QUOTES) ?>">
+                        name="name" required>
 
                     <?php if (isset($errors['name'])) : ?>
 
                         <div class="error-msg">
 
-                            ⚠️ <?= $errors['name'] ?>
+                            <?= $errors['name'] ?>
 
                         </div>
 
@@ -56,9 +52,7 @@ require base_path('views/partials/sidebar.php');
 
                 <div class="form-group">
 
-                    <label
-                        for="description"
-                        class="form-label">
+                    <label>
 
                         Description
 
@@ -68,13 +62,13 @@ require base_path('views/partials/sidebar.php');
                         id="description"
                         name="description"
                         rows="4"
-                        class="form-control"><?= htmlspecialchars($_POST['description'] ?? '', ENT_QUOTES) ?></textarea>
+                        class="form-control"></textarea>
 
                     <?php if (isset($errors['description'])) : ?>
 
                         <div class="error-msg">
 
-                            ⚠️ <?= $errors['description'] ?>
+                            <?= $errors['description'] ?>
 
                         </div>
 
@@ -84,19 +78,13 @@ require base_path('views/partials/sidebar.php');
 
                 <div class="btn-group">
 
-                    <a
-                        href="/categories"
-                        class="act-btn btn-cancel">
-
-                        Cancel
-
-                    </a>
+                    
 
                     <button
                         type="submit"
-                        class="act-btn btn-submit">
+                        class="btn-save">
 
-                        Save Category
+                        Create Category
 
                     </button>
 

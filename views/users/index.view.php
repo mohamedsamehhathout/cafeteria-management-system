@@ -80,10 +80,39 @@ require base_path('views/partials/sidebar.php');
                 <?php foreach ($users as $this_user) : ?>
 
                     <tr>
-
                         <td>
-                            <?= htmlspecialchars($this_user['name']) ?>
-                        </td>
+
+                                <div class="prod-cell">
+
+                                    <img
+                                        src="<?= htmlspecialchars(
+                                                $this_user['image'] ?? '/images/default-product.png',
+                                                ENT_QUOTES
+                                            ) ?>"
+                                        alt="Product Photo"
+                                        class="prod-thumb">
+
+                                    <div>
+
+                                        <div class="prod-cell-name">
+
+                                            <?= htmlspecialchars($this_user['name'] ?? '', ENT_QUOTES) ?>
+
+                                        </div>
+
+                                        <div class="prod-cell-desc">
+
+                                            <?= htmlspecialchars($this_user['description'] ?? '', ENT_QUOTES) ?>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                        
 
                         <td>
                             <?= htmlspecialchars($this_user['email']) ?>

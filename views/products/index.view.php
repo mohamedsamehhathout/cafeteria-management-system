@@ -113,7 +113,7 @@ require base_path('views/partials/sidebar.php');
                                         href="/product/edit?id=<?= $product['id'] ?>"
                                         class="act-btn act-edit">
 
-                                        ✏️ Edit
+                                        Edit
 
                                     </a>
 
@@ -137,7 +137,7 @@ require base_path('views/partials/sidebar.php');
                                             type="submit"
                                             class="act-btn act-del">
 
-                                            🗑️
+                                            Delete
 
                                         </button>
 

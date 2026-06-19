@@ -94,6 +94,52 @@ $rooms = $db
         ORDER BY room_number
     ")
     ->get();
+
+$imagePath = '/images/default-user.png';
+
+if (
+    isset($_FILES['image']) &&
+    $_FILES['image']['error'] === UPLOAD_ERR_OK
+) {
+
+    $extension = strtolower(
+        pathinfo(
+            $_FILES['image']['name'],
+            PATHINFO_EXTENSION
+        )
+    );
+
+    $fileName =
+        md5(time() . $_FILES['image']['name'])
+        . '.'
+        . $extension;
+
+    $uploadDir =
+        base_path(
+            'public/uploads/users/'
+        );
+
+    if (! is_dir($uploadDir)) {
+
+        mkdir(
+            $uploadDir,
+            0755,
+            true
+        );
+    }
+
+    move_uploaded_file(
+
+        $_FILES['image']['tmp_name'],
+
+        $uploadDir . $fileName
+
+    );
+
+    $imagePath =
+        '/uploads/users/' . $fileName;
+}
+
 if (empty($errors)) {
 
     $db->query(
@@ -105,7 +151,8 @@ if (empty($errors)) {
         password,
         role,
         room_id,
-        extension
+        extension,
+        image
     )
     VALUES
     (
@@ -114,7 +161,8 @@ if (empty($errors)) {
         :password,
         :role,
         :room_id,
-        :extension
+        :extension,
+        :image
     )
     ",
     [
@@ -132,12 +180,17 @@ if (empty($errors)) {
 
         'room_id' => $roomId,
 
-        'extension' => $_POST['extension']
+        'extension' => $_POST['extension'],
+        'image' => $imagePath
     ]
 );
 
     redirect('/users');
 }
+
+
+
+
 view('users/create.view.php', [
 
         'errors' => $errors,

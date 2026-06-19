@@ -29,7 +29,7 @@ require base_path('views/partials/sidebar.php');
 
         <div class="edit-alert">
 
-            <span style="font-size:20px;">✏️</span>
+            
 
             <p>
 
@@ -49,7 +49,7 @@ require base_path('views/partials/sidebar.php');
 
             <div>
 
-                <form method="POST" action="/users">
+                <form method="POST" action="/users" enctype="multipart/form-data" autocomplete="off">
 
                     <input
                         type="hidden"
@@ -224,6 +224,19 @@ require base_path('views/partials/sidebar.php');
                                 >
 
                             </div>
+                            <div class="form-group">
+                                    <label for="image">User Image</label>
+                                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                                    <?php if (isset($errors['image'])) : ?>
+                                        <div class="error-msg"><?= $errors['image'] ?></div>
+                                    <?php endif; ?>
+                                </div>
+                                
+                                    
+                                    <div class="current-img-text">
+                                        <strong>Current File Path:</strong><br>
+                                        <?= htmlspecialchars(!empty($this_user['image']) ? $this_user['image'] : 'Default Placeholder Active', ENT_QUOTES) ?>
+                                    </div>
 
                         </div>
 
@@ -295,18 +308,19 @@ require base_path('views/partials/sidebar.php');
                     <div class="pp-header">
 
                         <h4>
-                            👤 User Profile
+                            User Profile
                         </h4>
 
                     </div>
 
                     <div class="pp-body">
 
-                        <div class="pp-avatar">
-
-                            <?= strtoupper(substr($this_user['name'], 0, 1)) ?>
-
-                        </div>
+                        <?php 
+                                        $displayImg = (!empty($this_user['image'])) ? $this_user['image'] : '/images/default-product.png'; 
+                                    ?>
+                                    <img src="<?= htmlspecialchars($displayImg, ENT_QUOTES) ?>" 
+                                        alt="Profile Image" 
+                                        class="profile-image">
 
                         <div class="pp-name">
 
@@ -397,23 +411,5 @@ require base_path('views/partials/sidebar.php');
     </div>
 
 </div>
-<script>
-    const roomSelect = document.querySelector('[name="room_id"]');
 
-    const newRoomWrapper =
-        document.getElementById('new-room-wrapper');
-
-    roomSelect.addEventListener('change', function () {
-
-        if (this.value === 'new') {
-
-            newRoomWrapper.style.display = 'block';
-
-        } else {
-
-            newRoomWrapper.style.display = 'none';
-        }
-
-    });
-</script>
 <?php require base_path('views/partials/footer.php'); ?>

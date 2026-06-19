@@ -12,61 +12,82 @@ require base_path('views/partials/sidebar.php');
 
     <?php require base_path('views/partials/navbar.php'); ?>
 
-<div class="user-details-wrapper">
 
-    <div class="user-card">
 
-        <div class="user-header">
+    <div>
 
-            <div class="user-avatar-large">
-                <?= strtoupper(substr($this_user['name'], 0, 1)) ?>
-            </div>
+                    
 
-            <div class="user-info">
+                    <div class="pp-body">
 
-                <h2><?= htmlspecialchars($this_user['name']) ?></h2>
+                        <?php 
+                                        $displayImg = (!empty($this_user['image'])) ? $this_user['image'] : '/images/default-product.png'; 
+                                    ?>
+                                    <img src="<?= htmlspecialchars($displayImg, ENT_QUOTES) ?>" 
+                                        alt="Profile Image" 
+                                        class="profile-image">
 
-                <p><?= htmlspecialchars($this_user['email']) ?></p>
+                        <div class="pp-name">
 
-                <span class="role-badge">
-                    <?= ucfirst($this_user['role']) ?>
-                </span>
+                            <?= htmlspecialchars($this_user['name']) ?>
 
-            </div>
+                        </div>
 
-        </div>
+                        <div class="pp-email">
 
-        <div class="details-grid">
+                            <?= htmlspecialchars($this_user['email']) ?>
 
-            <div class="detail-box">
-                <div class="detail-label">Room</div>
-                <div class="detail-value">
-                    <?= $this_user['room_number'] ?? 'No Room' ?>
+                        </div>
+
+                        <div class="pp-tags">
+
+                            <span class="pp-tag tag-employee">
+
+                                <?= ucfirst($this_user['role']) ?>
+
+                            </span>
+
+                        </div>
+
+                        <div
+                            style="
+                                margin-top:15px;
+                                padding-top:15px;
+                                border-top:1px solid var(--border);
+                            "
+                        >
+
+                            <div>
+
+                                <strong>Room:</strong>
+
+                                <?= $this_user['room_number'] ?>
+
+                            </div>
+
+                            <div style="margin-top:8px;">
+
+                                <strong>Extension:</strong>
+
+                                <?= $this_user['extension'] ?>
+
+                            </div>
+
+                            <div style="margin-top:8px;">
+
+                                <strong>Created:</strong>
+
+                                <?= $this_user['created_at'] ?>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
 
-            <div class="detail-box">
-                <div class="detail-label">Extension</div>
-                <div class="detail-value">
-                    <?= $this_user['extension'] ?>
-                </div>
-            </div>
-
-            <div class="detail-box">
-                <div class="detail-label">Created At</div>
-                <div class="detail-value">
-                    <?= $this_user['created_at'] ?>
-                </div>
-            </div>
-
-            <div class="detail-box">
-                <div class="detail-label">User ID</div>
-                <div class="detail-value">
-                    #<?= $this_user['id'] ?>
-                </div>
-            </div>
-
-        </div>
+   
 
         <div class="user-actions">
 
@@ -86,8 +107,7 @@ require base_path('views/partials/sidebar.php');
 
         </div>
 
-    </div>
+ </div>
 
-</div>
 
 <?php require base_path('views/partials/footer.php'); ?>

@@ -9,28 +9,26 @@ require_once base_path('views/partials/sidebar.php');
 
     <div class="page-body">
         
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="topbar-title"> Add New Product</h2>
+        <div class="page-header">
+            <h2> Add New Product</h2>
         </div>
 
         <div class="form-card">
             <form action="/products" method="POST" enctype="multipart/form-data" autocomplete="off">
                 
                 <div class="form-group">
-                    <label for="name" class="form-label">Product Name</label>
+                    <label for="name">Product Name</label>
                     <input type="text" 
                            id="name" 
                            name="name" 
-                           class="form-control" 
-                           placeholder="e.g., Iced Caramel Macchiato"
-                           value="<?= htmlspecialchars($_POST['name'] ?? '', ENT_QUOTES) ?>">
+                           placeholder="e.g., Iced Caramel Macchiato">
                     <?php if (isset($errors['name'])) : ?>
-                        <div class="error-msg">⚠️ <?= $errors['name'] ?></div>
+                        <div class="error-msg"><?= $errors['name'] ?></div>
                     <?php endif; ?>
                 </div>
 
                 <div class="form-group">
-                    <label for="category_id" class="form-label">Category</label>
+                    <label for="category_id">Category</label>
                     <select id="category_id" name="category_id" class="form-control">
                         <option value="">-- Select a Category --</option>
                         <?php foreach ($categories as $category) : ?>
@@ -41,36 +39,33 @@ require_once base_path('views/partials/sidebar.php');
                         <?php endforeach; ?>
                     </select>
                     <?php if (isset($errors['category_id'])) : ?>
-                        <div class="error-msg">⚠️ <?= $errors['category_id'] ?></div>
+                        <div class="error-msg"><?= $errors['category_id'] ?></div>
                     <?php endif; ?>
                 </div>
 
                 <div class="form-group">
-                    <label for="price" class="form-label">Price ($)</label>
+                    <label for="price">Price ($)</label>
                     <input type="number" 
                            id="price" 
                            name="price" 
                            step="0.01" 
                            min="0" 
-                           class="form-control" 
-                           placeholder="0.00"
-                           value="<?= htmlspecialchars($_POST['price'] ?? '', ENT_QUOTES) ?>">
+                           placeholder="0.00">
                     <?php if (isset($errors['price'])) : ?>
-                        <div class="error-msg">⚠️ <?= $errors['price'] ?></div>
+                        <div class="error-msg"><?= $errors['price'] ?></div>
                     <?php endif; ?>
                 </div>
 
                 <div class="form-group">
-                    <label for="image" class="form-label">Product Image (Optional)</label>
+                    <label for="image">Product Image (Optional)</label>
                     <input type="file" id="image" name="image" class="form-control" accept="image/*">
                     <?php if (isset($errors['image'])) : ?>
-                        <div class="error-msg">⚠️ <?= $errors['image'] ?></div>
+                        <div class="error-msg"><?= $errors['image'] ?></div>
                     <?php endif; ?>
                 </div>
 
-                <div class="btn-group">
-                    <button type="submit" class="act-btn btn-submit">Save Product</button>
-                    <a href="/products" class="act-btn btn-cancel">Cancel</a>
+                <div>
+                    <button type="submit" class="btn-save">Save Product</button>
                 </div>
 
             </form>

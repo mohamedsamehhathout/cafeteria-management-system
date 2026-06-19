@@ -51,9 +51,6 @@
   opacity: 0.9;
 }
 
-/* =========================
-   Stats Cards
-========================= */
 
 .grid-stats {
   display: grid;
@@ -83,9 +80,7 @@
   color: var(--primary);
 }
 
-/* =========================
-   Report Tables
-========================= */
+
 
 .table-card {
   background: white;
@@ -125,9 +120,7 @@
   background: #fafafa;
 }
 
-/* =========================
-   Product List
-========================= */
+
 
 .table-card ul {
   list-style: none;
@@ -144,9 +137,7 @@
   font-weight: 500;
 }
 
-/* =========================
-   Responsive
-========================= */
+
 
 @media (max-width: 768px) {
 

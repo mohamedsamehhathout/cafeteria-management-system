@@ -15,9 +15,9 @@ require base_path('views/partials/sidebar.php');
 
         <div class="page-header">
 
-            <h1 class="page-title">
+            <h2>
                 Edit Category
-            </h1>
+            </h2>
 
         </div>
 
@@ -37,9 +37,7 @@ require base_path('views/partials/sidebar.php');
 
                 <div class="form-group">
 
-                    <label
-                        for="name"
-                        class="form-label">
+                    <label>
 
                         Category Name
 
@@ -49,14 +47,13 @@ require base_path('views/partials/sidebar.php');
                         type="text"
                         id="name"
                         name="name"
-                        class="form-control"
-                        value="<?= htmlspecialchars($category['name'] ?? '', ENT_QUOTES) ?>">
+                        value="<?= htmlspecialchars($category['name'] ?? '', ENT_QUOTES) ?>" required>
 
                     <?php if (isset($errors['name'])) : ?>
 
                         <div class="error-msg">
 
-                            ⚠️ <?= $errors['name'] ?>
+                            <?= $errors['name'] ?>
 
                         </div>
 
@@ -66,9 +63,7 @@ require base_path('views/partials/sidebar.php');
 
                 <div class="form-group">
 
-                    <label
-                        for="description"
-                        class="form-label">
+                    <label>
 
                         Description
 
@@ -84,7 +79,7 @@ require base_path('views/partials/sidebar.php');
 
                         <div class="error-msg">
 
-                            ⚠️ <?= $errors['description'] ?>
+                            <?= $errors['description'] ?>
 
                         </div>
 
@@ -94,17 +89,11 @@ require base_path('views/partials/sidebar.php');
 
                 <div class="btn-group">
 
-                    <a
-                        href="/categories"
-                        class="act-btn btn-cancel">
-
-                        Cancel
-
-                    </a>
+                    
 
                     <button
                         type="submit"
-                        class="act-btn btn-submit">
+                        class="btn-save">
 
                         Update Category
 

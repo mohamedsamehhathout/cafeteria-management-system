@@ -5,83 +5,7 @@ $pageTitle = 'Add User';
 require base_path('views/partials/head.php');
 require base_path('views/partials/sidebar.php');
 ?>
-<style>
-    .page-content{
-        padding: 28px;
-    }
 
-    .page-header{
-        margin-bottom: 24px;
-        margin-left: 200px;
-    }
-
-    .page-header h2{
-        color:#2C1A0E;
-        font-size:28px;
-        font-weight:700;
-    }
-
-    .form-card{
-        background:#fff;
-        border-radius:14px;
-        border:1px solid #E8E0D8;
-        box-shadow:0 2px 20px rgba(111,78,55,.10);
-        max-width:800px;
-        overflow:hidden;
-        margin-left: 200px;
-    }
-
-    .form-card form{
-        padding:24px;
-    }
-
-    .form-group{
-        margin-bottom:20px;
-    }
-
-    .form-group label{
-        display:block;
-        margin-bottom:8px;
-        font-size:12px;
-        font-weight:700;
-        color:#4A3020;
-        text-transform:uppercase;
-    }
-
-    .form-group input,
-    .form-group select{
-        width:100%;
-        padding:12px 14px;
-        border:2px solid #E8E0D8;
-        border-radius:10px;
-        font-size:14px;
-        outline:none;
-        transition:.2s;
-        background:#fafafa;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus{
-        border-color:#6F4E37;
-        background:#fff;
-    }
-
-    .btn-save{
-        width:100%;
-        padding:14px;
-        border:none;
-        border-radius:10px;
-        cursor:pointer;
-        background:linear-gradient(
-            135deg,
-            #6F4E37,
-            #8B6347
-        );
-        color:#fff;
-        font-size:15px;
-        font-weight:700;
-    }
-</style>
 <div class="main">
 
     <?php require base_path('views/partials/navbar.php'); ?>
@@ -94,7 +18,7 @@ require base_path('views/partials/sidebar.php');
 
         <div class="form-card">
 
-            <form method="POST" action="/users">
+            <form method="POST" action="/users" enctype="multipart/form-data" autocomplete="off">
 
                 <div class="form-group">
                     <label>Name</label>
@@ -142,7 +66,7 @@ require base_path('views/partials/sidebar.php');
                         <?php foreach($rooms as $room): ?>
 
                             <option value="<?= $room['id'] ?>">
-                                <?= $room['room_number'] ?>
+                                <?= htmlspecialchars($room['room_number']) ?>
                             </option>
 
                             
@@ -174,6 +98,13 @@ require base_path('views/partials/sidebar.php');
                     <label>Extension</label>
                     <input type="text" name="extension">
                 </div>
+                <div class="form-group">
+                    <label for="image">User Image</label>
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                    <?php if (isset($errors['image'])) : ?>
+                        <div class="error-msg"><?= $errors['image'] ?></div>
+                    <?php endif; ?>
+                </div>
 
                 <button type="submit" class="btn-save">
                     Create User
@@ -186,23 +117,5 @@ require base_path('views/partials/sidebar.php');
     </main>
 
 </div>
-<script>
-    const roomSelect = document.querySelector('[name="room_id"]');
 
-    const newRoomWrapper =
-        document.getElementById('new-room-wrapper');
-
-    roomSelect.addEventListener('change', function () {
-
-        if (this.value === 'new') {
-
-            newRoomWrapper.style.display = 'block';
-
-        } else {
-
-            newRoomWrapper.style.display = 'none';
-        }
-
-    });
-</script>
 <?php require base_path('views/partials/footer.php'); ?>

@@ -8,25 +8,84 @@
 
 <div class="page-body">
 
-    <div class="card">
+    <div >
 
-        <div class="card-header">
-            <h3>My Profile</h3>
-        </div>
+                    <div class="pp-header">
 
-        <div class="card-body">
+                        <h4>
+                            User Profile
+                        </h4>
 
-            <h2><?= htmlspecialchars($profile['name']) ?></h2>
-            <p>Email: <?= htmlspecialchars($profile['email']) ?></p>
+                    </div>
 
-            <p>Role: <?= ucfirst($profile['role']) ?></p>
-            
+                    <div class="pp-body">
 
-            <p>Extension: <?= htmlspecialchars($profile['extension'] ?? '-') ?></p>
+                        <?php 
+                                        $displayImg = (!empty($profile['image'])) ? $profile['image'] : '/images/default-product.png'; 
+                                    ?>
+                                    <img src="<?= htmlspecialchars($displayImg, ENT_QUOTES) ?>" 
+                                        alt="Profile Image" 
+                                        class="profile-image">
 
-            <p>Room: <?= htmlspecialchars($profile['room_number'] ?? '-') ?></p>
+                        <div class="pp-name">
 
-        </div>
+                            <?= htmlspecialchars($profile['name']) ?>
+
+                        </div>
+
+                        <div class="pp-email">
+
+                            <?= htmlspecialchars($profile['email']) ?>
+
+                        </div>
+
+                        <div class="pp-tags">
+
+                            <span class="pp-tag tag-employee">
+
+                                <?= ucfirst($profile['role']) ?>
+
+                            </span>
+
+                        </div>
+
+                        <div
+                            style="
+                                margin-top:15px;
+                                padding-top:15px;
+                                border-top:1px solid var(--border);
+                            "
+                        >
+
+                            <div>
+
+                                <strong>Room:</strong>
+
+                                <?= $profile['room_number'] ?>
+
+                            </div>
+
+                            <div style="margin-top:8px;">
+
+                                <strong>Extension:</strong>
+
+                                <?= $profile['extension'] ?>
+
+                            </div>
+
+                            <div style="margin-top:8px;">
+
+                                <strong>Created:</strong>
+
+                                <?= $profile['created_at'] ?>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
     </div>
 

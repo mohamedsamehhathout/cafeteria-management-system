@@ -19,7 +19,14 @@
     $router->get('/reports', 'controllers/reports/index.php');
     $router->get('/products', 'controllers/products/index.php');
     $router->get('/categories', 'controllers/categories/index.php');
-    $router->get('/orders', 'controllers/orders/show.php');
+    $router->get('/orders', 'controllers/orders/index.php');
+    $router->get('/orders/show', 'controllers/orders/show.php');
+
+    $router->get('/orders/edit', 'controllers/orders/edit.php');
+
+$router->patch('/orders', 'controllers/orders/update.php');
+$router->delete('/order-item', 'controllers/orders/destroy.php');
+$router->post('/orders/status', 'controllers/orders/status.php');
     
     $router->get('/my-orders', 'controllers/orders/user-orders.php');
 

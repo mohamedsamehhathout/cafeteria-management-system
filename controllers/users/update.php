@@ -38,6 +38,51 @@ $emailExists = $db
     )
     ->find();
 
+$imagePath = '/images/default-user.png';
+
+if (
+    isset($_FILES['image']) &&
+    $_FILES['image']['error'] === UPLOAD_ERR_OK
+) {
+
+    $extension = strtolower(
+        pathinfo(
+            $_FILES['image']['name'],
+            PATHINFO_EXTENSION
+        )
+    );
+
+    $fileName =
+        md5(time() . $_FILES['image']['name'])
+        . '.'
+        . $extension;
+
+    $uploadDir =
+        base_path(
+            'public/uploads/users/'
+        );
+
+    if (! is_dir($uploadDir)) {
+
+        mkdir(
+            $uploadDir,
+            0755,
+            true
+        );
+    }
+
+    move_uploaded_file(
+
+        $_FILES['image']['tmp_name'],
+
+        $uploadDir . $fileName
+
+    );
+
+    $imagePath =
+        '/uploads/users/' . $fileName;
+}
+
 if ($emailExists) {
 
     $errors['email'] = 'Email already exists.';
@@ -152,7 +197,8 @@ if (! empty($_POST['password'])) {
             password = :password,
             role = :role,
             room_id = :room_id,
-            extension = :extension
+            extension = :extension,
+            image = :image
         WHERE id = :id
         ",
         [
@@ -172,7 +218,8 @@ if (! empty($_POST['password'])) {
 
             'room_id' => $roomId,
 
-            'extension' => $_POST['extension']
+            'extension' => $_POST['extension'],
+            'image' => $imagePath
         ]
     );
 
@@ -186,7 +233,8 @@ if (! empty($_POST['password'])) {
             email = :email,
             role = :role,
             room_id = :room_id,
-            extension = :extension
+            extension = :extension,
+            image= :image
         WHERE id = :id
         ",
         [
@@ -201,7 +249,8 @@ if (! empty($_POST['password'])) {
 
             'room_id' => $roomId,
 
-            'extension' => $_POST['extension']
+            'extension' => $_POST['extension'],
+            'image' => $imagePath
         ]
     );
 

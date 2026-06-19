@@ -37,10 +37,10 @@ body {
     line-height: 1.6;
 }
 
-/* Sidebar */
+
 .sidebar {
     width: 260px;
-    background: var(--bg-sidebar);
+    background: var(--primary-dark);
 
     height: 100vh;
 
@@ -271,7 +271,7 @@ body {
     cursor: pointer;
 }
 
-/* Page body */
+
 .page-body {
     padding: 32px;
     flex: 1;
@@ -279,7 +279,7 @@ body {
     flex-direction: column;
 }
 
-/* Cards */
+
 .card {
     background: #fff;
     border-radius: var(--radius);
@@ -305,7 +305,7 @@ body {
     padding: 24px;
 }
 
-/* Stat cards */
+
 .stat-card {
     background: #fff;
     border-radius: var(--radius);
@@ -351,7 +351,7 @@ body {
     color: var(--danger);
 }
 
-/* Buttons */
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -409,7 +409,6 @@ body {
 }
 
 
-/* Badges */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -445,7 +444,7 @@ body {
     color: #721c24;
 }
 
-/* Table */
+
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -480,7 +479,7 @@ body {
 
 
 
-/* Forms */
+
 .form-group {
     margin-bottom: 20px;
 }
@@ -512,7 +511,7 @@ body {
     color: #bbb;
 }
 
-/* Pagination */
+
 .pagination {
     display: flex;
     align-items: center;
@@ -543,7 +542,7 @@ body {
     background: var(--bg);
 }
 
-/* Grid */
+
 .grid {
     display: grid;
 }
@@ -564,7 +563,7 @@ body {
     gap: 20px;
 }
 
-/* Product image placeholder */
+
 .product-img {
     width: 48px;
     height: 48px;
@@ -577,7 +576,7 @@ body {
     font-size: 22px;
 }
 
-/* Avatar */
+
 .user-avatar {
     width: 40px;
     height: 40px;
@@ -591,7 +590,7 @@ body {
     font-size: 14px;
 }
 
-/* Alert */
+
 .alert {
     padding: 14px 18px;
     border-radius: var(--radius-sm);
@@ -619,7 +618,7 @@ body {
     border-left: 4px solid var(--warning);
 }
 
-/* Search bar */
+
 .search-bar {
     position: relative;
     width: 280px;
@@ -649,7 +648,7 @@ body {
     color: var(--text-muted);
 }
 
-/* Order card */
+
 .order-card {
     background: #fff;
     border-radius: var(--radius);
@@ -665,7 +664,7 @@ body {
     margin-bottom: 16px;
 }
 
-/* Product grid card */
+
 .product-card {
     background: #fff;
     border-radius: var(--radius);
@@ -756,14 +755,14 @@ body {
     margin-top: 2px;
 }
 
-/* Divider */
+
 .divider {
     height: 1px;
     background: var(--border);
     margin: 20px 0;
 }
 
-/* Flex helpers */
+
 .flex {
     display: flex;
 }
@@ -789,7 +788,7 @@ body {
     gap: 20px;
 }
 
-/* Text helpers */
+
 .text-muted {
     color: var(--text-muted);
 }
@@ -818,7 +817,7 @@ body {
     font-size: 11px;
 }
 
-/* Spacing */
+
 .mb-4 {
     margin-bottom: 4px;
 }
