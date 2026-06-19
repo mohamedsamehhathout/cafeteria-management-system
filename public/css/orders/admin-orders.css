@@ -41,11 +41,12 @@
 }
 
 .processing .lane-header {
-    background: #fff8e1;
+    background: #fff3cd;
+    /* color: white; */
 }
 
 .processing .lane-count {
-    background: #ffc107;
+    background: #856404;
 }
 
 .delivery .lane-header {
@@ -70,7 +71,22 @@
     flex-direction: column;
     gap: 12px;
 }
-
+.btn-success{
+    background: #e8f5e9;
+    color: black;
+}
+.btn-success:hover{
+    background: #28a745;
+    color: white;
+}
+.btn-primary{
+    background: #e3f2fd;
+    color: black;
+}
+.btn-primary:hover{
+    background: #2196f3;
+    color: white;
+}
 /* =========================
    Order Card
 ========================= */
@@ -128,7 +144,7 @@
 }
 
 .status-badge.delivery {
-    background: #d1ecf1;
+    background: #e3f2fd;
     color: #0c5460;
 }
 

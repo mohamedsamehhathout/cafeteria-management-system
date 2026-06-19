@@ -25,9 +25,11 @@ $db = new Database($config);
 
 $emailExists = $db
     ->query(
-        "SELECT id
-         FROM users
-         WHERE email = :email",
+        "
+        SELECT id
+        FROM users
+        WHERE email = :email
+        ",
         [
             'email' => $_POST['email']
         ]
@@ -75,7 +77,7 @@ if ($_POST['room_id'] === 'new') {
 
         $db->query(
             "
-            INSERT INTO rooms (room_number)
+            INSERT INTO rooms (room_number, description)
             VALUES (:room_number, :description)
             ",
             [

@@ -55,6 +55,9 @@ function redirect($path)
 function auth()
 {
     if (! \Core\Auth::check()) {
+        
+        
+        
         redirect('/login');
     }
 }

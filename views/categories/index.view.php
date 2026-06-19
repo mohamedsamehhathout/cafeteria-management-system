@@ -16,7 +16,7 @@ require base_path('views/partials/sidebar.php');
                 </h1>
 
                 <a href="/categories/create" class="btn btn-primary">
-                    + Add New Category
+                    Add New Category
                 </a>
 
             </div>

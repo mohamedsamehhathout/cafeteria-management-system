@@ -49,7 +49,7 @@ require base_path('views/partials/sidebar.php');
 
             <div>
 
-                <form method="POST" action="/users" enctype="multipart/form-data" autocomplete="off">
+                <form method="POST" action="/products" enctype="multipart/form-data" autocomplete="off">
 
                     <input
                         type="hidden"

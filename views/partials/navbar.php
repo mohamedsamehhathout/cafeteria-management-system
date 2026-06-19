@@ -23,6 +23,7 @@ $user = Auth::user();
     <button id="sidebar-toggle" class="sidebar-toggle">
         ☰
     </button>
+    
 
 </header>
 <script>

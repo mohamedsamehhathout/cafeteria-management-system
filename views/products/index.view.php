@@ -20,7 +20,7 @@ require base_path('views/partials/sidebar.php');
             </h1>
 
             <a href="/products/create" class="btn btn-primary">
-                + Add New Product
+                Add New Product
             </a>
 
         </div>

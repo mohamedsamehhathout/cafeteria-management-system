@@ -64,7 +64,7 @@ $router->post('/home', 'controllers/orders/user/store.php');
     $router->post('/products', 'controllers/products/store.php');
 
     $router->get('/product/edit', 'controllers/products/edit.php');
-    $router->patch('/product', 'controllers/products/update.php');
+    $router->patch('/products', 'controllers/products/update.php');
 
     $router->delete('/products', 'controllers/products/destroy.php');
 

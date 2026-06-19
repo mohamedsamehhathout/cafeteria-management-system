@@ -147,9 +147,9 @@ require base_path('views/partials/sidebar.php');
 
                                     <button
                                         type="submit"
-                                        class="btn btn-primary">
+                                        class="btn btn-primary send">
 
-                                        Send
+                                        Send to delivary
 
                                     </button>
                                     

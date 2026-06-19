@@ -11,9 +11,7 @@
 
     <div class="reset-card">
 
-        <div class="reset-icon">
-            🔐
-        </div>
+        
 
         <h2 class="reset-title">
             Set New Password

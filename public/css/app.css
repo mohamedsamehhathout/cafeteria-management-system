@@ -371,6 +371,11 @@ body {
     background: var(--primary);
     color: white;
 }
+
+.send{
+    background: #2196f3;
+}
+
 .btn-primary:hover {
     background: var(--primary-light);
 }
@@ -721,7 +726,10 @@ body {
     color: #fff;
     background: rgba(255, 255, 255, 0.05);
 }
-
+.logout-link{
+    font-weight: 800;
+    font-size:small;
+}
 .logout-link:hover {
     color: #ff6b6b;
 }
