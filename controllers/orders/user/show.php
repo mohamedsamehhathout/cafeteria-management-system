@@ -31,7 +31,7 @@ if (
     $order['user_id'] != Session::get('user')['id']
 ) {
 
-    abort(403);
+    abort(401);
 }
 
 $orderItems = $db

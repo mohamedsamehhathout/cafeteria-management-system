@@ -58,7 +58,7 @@ function auth()
         
         
         
-        redirect('/login');
+        abort(401);
     }
 }
 function  adminOnly(){

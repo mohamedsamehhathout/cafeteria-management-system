@@ -5,14 +5,7 @@ use Core\Session;
 
 use Core\Auth;
 
-if (
-    ! Auth::isAdmin()
-    &&
-    ! Auth::isUser()
-) {
-
-    abort(403);
-}
+userOnly();
 
 $config = require base_path('config.php');
 

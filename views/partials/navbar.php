@@ -28,26 +28,33 @@ $user = Auth::user();
 </header>
 <script>
 const toggleBtn = document.getElementById("sidebar-toggle");
-
 const sidebar = document.querySelector(".sidebar");
-
 const main = document.querySelector(".main");
 
-
 toggleBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("collapsed");
+    const isCollapsed = sidebar.classList.contains("collapsed");
 
-    main.classList.toggle("expanded");
+    if (isCollapsed) {
+        main.classList.remove("expanded");
 
-    localStorage.setItem(
-        "sidebarCollapsed",
-        sidebar.classList.contains("collapsed"),
-    );
+        setTimeout(() => {
+            sidebar.classList.remove("collapsed");
+        }, 100);
+
+    } else {
+
+        sidebar.classList.add("collapsed");
+
+        setTimeout(() => {
+            main.classList.add("expanded");
+        }, 100);
+    }
+
+    localStorage.setItem("sidebarCollapsed", !isCollapsed);
 });
 
 if (localStorage.getItem("sidebarCollapsed") === "true") {
     sidebar.classList.add("collapsed");
-
     main.classList.add("expanded");
 }
 </script>
